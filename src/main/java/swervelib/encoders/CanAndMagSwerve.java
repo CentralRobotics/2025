@@ -44,6 +44,8 @@ public class CanAndMagSwerve extends SwerveAbsoluteEncoder
   public void factoryDefault()
   {
     encoder.resetFactoryDefaults(false);
+    encoder.clearStickyFaults();
+    encoder.setPartyMode(3);
   }
 
   /**
