@@ -32,6 +32,11 @@ public final class Constants
 //    public static final PIDConstants ANGLE_PID       = new PIDConstants(0.4, 0, 0.01);
 //  }
 
+public final class MotorConstants{
+  public static final int LEFT_ELEVATOR_MOTOR_ID = 11;
+  public static final int RIGHT_ELEVATOR_MOTOR_ID = 12;
+}
+
   public static final class DrivebaseConstants
   {
 
