@@ -14,8 +14,8 @@
     },
     "drive": {
       "diameter": 4,
-      "gearRatio": 7.363636363636362,
-      "gears": "11 42 42 i28 18 i15 45",
+      "gearRatio": 8.1,
+      "gears": "10 42 42 i28 18 i15 45",
       "factor": 0
     }
   },
