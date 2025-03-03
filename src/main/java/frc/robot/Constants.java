@@ -4,6 +4,9 @@
 
 package frc.robot;
 
+import static edu.wpi.first.units.Units.Inches;
+import static edu.wpi.first.units.Units.Meters;
+
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.util.Units;
 import swervelib.math.Matter;
@@ -32,9 +35,22 @@ public final class Constants
 //    public static final PIDConstants ANGLE_PID       = new PIDConstants(0.4, 0, 0.01);
 //  }
 
-public final class MotorConstants{
+public final class ElevatorConstants{
   public static final int LEFT_ELEVATOR_MOTOR_ID = 11;
   public static final int RIGHT_ELEVATOR_MOTOR_ID = 12;
+  public static final int ELEVATOR_CANCODER_ID = 13;
+  public static final double kG = 1.0;
+  public static final double kV = 0.0;
+  public static final double kA = 0.0;
+  public static final double kP = 0.0;
+  public static final double kI = 0.0;
+  public static final double kD = 0.0;
+  public static final double kElevatorGearing = 21.7777777777;
+  public static final double kElevatorDrumRadius = Units.inchesToMeters(1.79); // meters
+  public static final double kElevatorCarriageMass = Units.lbsToKilograms(16); // kg
+  public static final double kElevatorMinHeightMeters = 0.0; // meters
+  public static final double kElevatorMaxHeightMeters = Units.inchesToMeters(69); // meters
+  public static final double kElevatorDefaultTolerance = Inches.of(1).in(Meters);
 }
 
   public static final class DrivebaseConstants
