@@ -71,4 +71,30 @@ public final class ElevatorConstants{
     public static final double RIGHT_X_DEADBAND = 0.1;
     public static final double TURN_CONSTANT    = 6;
   }
+
+  public static final class ArmConstants
+  {
+    public static final int ARM_MOTOR_ID = 20;
+    public static final double ARM_GEAR_RATIO = 0;
+    public static final double ARM_LENGTH_METERS = Units.inchesToMeters(0);
+    public static final double ARM_MAX_ANGLE = 180.0; // degrees
+    public static final double ARM_MIN_ANGLE = 0.0; // degrees
+    public static final double kG = 0.0;
+    public static final double kV = 0.0;
+    public static final double kA = 0.0;
+    public static final double kP = 0.0;
+    public static final double kI = 0.0;
+    public static final double kD = 0.0;
+    public static final double FORWARD_LIMIT = 0;
+    public static final double REVERSE_LIMIT = 0;
+    public static final int ARM_CANCODER_ID = 0;
+    public static final double INTAKE_SPEED = 0;
+  }
+
+  public static final class IntakeConstants
+  {
+    public static final int INTAKE_MOTOR_ID = 21;
+    public static final double INTAKE_SPEED = 0.5;
+    public static final double INTAKE_REVERSE_SPEED = -0.5;
+  }
 }

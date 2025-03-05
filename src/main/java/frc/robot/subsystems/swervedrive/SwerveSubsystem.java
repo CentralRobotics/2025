@@ -69,8 +69,8 @@ public class SwerveSubsystem extends SubsystemBase
   private final SwerveDrive swerveDrive;
 
   private final PoseEstimator poseEstimator;
-  private final Translation3d centerCameraTranslation = new Translation3d(Inches.of(0).in(Meters), Inches.of(0).in(Meters), Inches.of(12).in(Meters));  //TODO: Update with actual camera position
-  private final Rotation3d centerCameraRotation = new Rotation3d(0, Degrees.of(0).in(Radians), Degrees.of(0).in(Radians));
+  private final Translation3d centerCameraTranslation = new Translation3d(Inches.of(-3.018).in(Meters), Inches.of(-0.65).in(Meters), Inches.of(35.038).in(Meters));
+  private final Rotation3d centerCameraRotation = new Rotation3d(Degrees.of(0).in(Radians), Degrees.of(0).in(Radians), Degrees.of(0).in(Radians));
 
 
   /**
