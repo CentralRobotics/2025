@@ -40,11 +40,11 @@ public final class Constants
 public final class ElevatorConstants{
   public static final int LEFT_ELEVATOR_MOTOR_ID = 11;
   public static final int RIGHT_ELEVATOR_MOTOR_ID = 12;
-  public static final int ELEVATOR_CANCODER_ID = 13;
-  public static final double kG = 1.0;
+  public static final int ELEVATOR_CANCODER_ID = 2;
+  public static final double kG = 0.01;
   public static final double kV = 0.0;
   public static final double kA = 0.0;
-  public static final double kP = 0.0;
+  public static final double kP = 0.5;
   public static final double kI = 0.0;
   public static final double kD = 0.0;
   public static final double kElevatorGearing = 21.7777777777;
@@ -74,20 +74,20 @@ public final class ElevatorConstants{
 
   public static final class ArmConstants
   {
-    public static final int ARM_MOTOR_ID = 20;
-    public static final double ARM_GEAR_RATIO = 0;
+    public static final int ARM_MOTOR_ID = 21;
+    public static final double ARM_GEAR_RATIO = 1;
     public static final double ARM_LENGTH_METERS = Units.inchesToMeters(0);
     public static final double ARM_MAX_ANGLE = 180.0; // degrees
     public static final double ARM_MIN_ANGLE = 0.0; // degrees
-    public static final double kG = 0.0;
+    public static final double kG = 0.01;
     public static final double kV = 0.0;
     public static final double kA = 0.0;
-    public static final double kP = 0.0;
+    public static final double kP = 17.0;
     public static final double kI = 0.0;
     public static final double kD = 0.0;
-    public static final double FORWARD_LIMIT = 0;
-    public static final double REVERSE_LIMIT = 0;
-    public static final int ARM_CANCODER_ID = 0;
+    public static final double FORWARD_LIMIT = 0.6;
+    public static final double REVERSE_LIMIT = -0.13;
+    public static final int ARM_CANCODER_ID = 1;
     public static final double INTAKE_SPEED = 0;
   }
 

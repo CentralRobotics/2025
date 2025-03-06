@@ -7,11 +7,12 @@ import static edu.wpi.first.units.Units.Second;
 
 import com.ctre.phoenix6.configs.CANcoderConfiguration;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
-import com.ctre.phoenix6.controls.PositionVoltage;
+import com.ctre.phoenix6.controls.PositionDutyCycle;
+import com.ctre.phoenix6.controls.VoltageOut;
 import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.hardware.TalonFX;
-import com.ctre.phoenix6.signals.FeedbackSensorSourceValue;
 import com.ctre.phoenix6.signals.GravityTypeValue;
+import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.ctre.phoenix6.sim.CANcoderSimState;
 import com.ctre.phoenix6.sim.TalonFXSimState;
@@ -23,11 +24,13 @@ import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.Distance;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.RobotController;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.simulation.BatterySim;
 import edu.wpi.first.wpilibj.simulation.ElevatorSim;
 import edu.wpi.first.wpilibj.simulation.RoboRioSim;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.ElevatorConstants;
 
 public class Elevator extends SubsystemBase {
@@ -58,8 +61,8 @@ public class Elevator extends SubsystemBase {
         elevatorConfig.ClosedLoopRamps.VoltageClosedLoopRampPeriod = 0.25;
 
         elevatorConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;
-        elevatorConfig.SoftwareLimitSwitch.ForwardSoftLimitEnable = false;
-        elevatorConfig.SoftwareLimitSwitch.ForwardSoftLimitThreshold = 0; //TODO find this value
+        elevatorConfig.SoftwareLimitSwitch.ForwardSoftLimitEnable = true;
+        elevatorConfig.SoftwareLimitSwitch.ForwardSoftLimitThreshold = 50; //TODO find this value
         elevatorConfig.SoftwareLimitSwitch.ReverseSoftLimitEnable = false;
         elevatorConfig.SoftwareLimitSwitch.ReverseSoftLimitThreshold = 0; //TODO find this value
         
@@ -71,11 +74,16 @@ public class Elevator extends SubsystemBase {
         elevatorConfig.Slot0.kI = ElevatorConstants.kI;
         elevatorConfig.Slot0.kD = ElevatorConstants.kD;
 
-        elevatorConfig.Feedback.FeedbackSensorSource = FeedbackSensorSourceValue.RemoteCANcoder;
-        elevatorConfig.Feedback.FeedbackRemoteSensorID = ElevatorConstants.ELEVATOR_CANCODER_ID;
+        elevatorConfig.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
+
+        // elevatorConfig.Feedback.FeedbackSensorSource = FeedbackSensorSourceValue.RemoteCANcoder;
+        // elevatorConfig.Feedback.FeedbackRemoteSensorID = ElevatorConstants.ELEVATOR_CANCODER_ID;
 
         elevatorMotor_1.getConfigurator().apply(elevatorConfig);
         elevatorMotor_2.getConfigurator().apply(elevatorConfig);
+
+        elevatorMotor_1.setPosition(0);
+        elevatorMotor_2.setPosition(0);
 
 
         if (RobotBase.isSimulation()) {
@@ -121,8 +129,9 @@ public class Elevator extends SubsystemBase {
 
     private double setHeight;
     public void reachGoal(double goal){
+        System.out.println("setting elevator to " + goal);
         setHeight = goal;
-        PositionVoltage command = new PositionVoltage(convertDistanceToRotations(Meters.of(goal)));
+        PositionDutyCycle command = new PositionDutyCycle(convertDistanceToRotations(Meters.of(goal)));
         elevatorMotor_1.setControl(command);
         elevatorMotor_2.setControl(command);
     }
@@ -154,13 +163,27 @@ public class Elevator extends SubsystemBase {
         return Rotations.of((distance.in(Meters) / (2 * Math.PI * ElevatorConstants.kElevatorDrumRadius)));
     }
 
+    public void set(double speed){
+        System.out.println("setting speed " + speed);
+        VoltageOut command = new VoltageOut(speed * 12);
+        elevatorMotor_1.setControl(command);
+        elevatorMotor_2.setControl(command);
+    }
+
+    public Command setElevator(double speed){
+        return run(() -> set(speed));
+    }
+
+    public Command setElevator(CommandXboxController xbox){
+        return run(() -> set(xbox.getLeftY()));
+    }
+
      /**
      * Stop the control loop and motor output.
      */
     public void stop()
     {
-        elevatorMotor_1.set(0.0);
-        elevatorMotor_2.set(0.0);
+        set(0);
     }
 
     /**
