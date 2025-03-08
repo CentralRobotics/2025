@@ -35,13 +35,13 @@ public class Led extends SubsystemBase {
 		viewl = ledBuffer.createView(0, LED_COUNT / 2 - 1);
 		viewr = ledBuffer.createView(LED_COUNT / 2, LED_COUNT - 1).reversed();
 
-		led.start();
+		// led.start();
 	}
 
-	@Override
-	public void periodic() {
-		rainbow.applyTo(viewl);
-		rainbow.applyTo(viewr);
-		led.setData(ledBuffer);
-	}
+	// @Override
+	// public void periodic() {
+	// 	rainbow.applyTo(viewl);
+	// 	rainbow.applyTo(viewr);
+	// 	led.setData(ledBuffer);
+	// }
 }

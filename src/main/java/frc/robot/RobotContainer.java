@@ -24,7 +24,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Elevator;
-import frc.robot.subsystems.Led;
+import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Pneumatics;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import swervelib.SwerveInputStream;
@@ -39,12 +39,14 @@ public class RobotContainer
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   final         CommandXboxController driverXbox = new CommandXboxController(0);
+  final         CommandXboxController operatorXbox = new CommandXboxController(1);
   // The robot's subsystems and commands are defined here...
   private final SwerveSubsystem       drivebase  = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(), "swerve/falcon"));
   private final Elevator              elevator   = new Elevator();
   private final Arm                   arm        = new Arm();
+  private final Intake                intake     = new Intake();
   private final Pneumatics            pneumatics = new Pneumatics();
-  private final Led                   led        = new Led();
+  // private final Led                   led        = new Led();
 
   /**
    * Converts driver input into a field-relative ChassisSpeeds that is controlled by angular velocity.
@@ -122,8 +124,7 @@ public class RobotContainer
     Command driveFieldOrientedDirectAngle      = drivebase.driveFieldOriented(driveDirectAngle);
     Command driveFieldOrientedAnglularVelocity = drivebase.driveFieldOriented(driveAngularVelocity);
     Command driveRobotOrientedAngularVelocity  = drivebase.driveFieldOriented(driveRobotOriented);
-    Command driveSetpointGen = drivebase.driveWithSetpointGeneratorFieldRelative(
-        driveDirectAngle);
+    Command driveSetpointGen = drivebase.driveWithSetpointGeneratorFieldRelative(driveDirectAngle);
     Command driveFieldOrientedDirectAngleKeyboard      = drivebase.driveFieldOriented(driveDirectAngleKeyboard);
     Command driveFieldOrientedAnglularVelocityKeyboard = drivebase.driveFieldOriented(driveAngularVelocityKeyboard);
     Command driveSetpointGenKeyboard = drivebase.driveWithSetpointGeneratorFieldRelative(
@@ -155,6 +156,7 @@ public class RobotContainer
                                            ));
       driverXbox.start().onTrue(Commands.runOnce(() -> drivebase.resetOdometry(new Pose2d(3, 3, new Rotation2d()))));
       driverXbox.button(1).whileTrue(drivebase.sysIdDriveMotorCommand());
+      driverXbox.button(3).whileTrue(drivebase.sysIdAngleMotorCommand());
       driverXbox.button(2).whileTrue(Commands.runEnd(() -> driveDirectAngleKeyboard.driveToPoseEnabled(true),
                                                      () -> driveDirectAngleKeyboard.driveToPoseEnabled(false)));
 
@@ -178,10 +180,25 @@ public class RobotContainer
     {
       driverXbox.a().onTrue((Commands.runOnce(drivebase::zeroGyro)));
       driverXbox.x().onTrue(Commands.runOnce(drivebase::addFakeVisionReading));
+      // driverXbox.b().whileTrue(drivebase.sysIdDriveMotorCommand());
+      // driverXbox.y().whileTrue(drivebase.sysIdAngleMotorCommand());
+      // driverXbox.b().whileTrue(elevator.setElevatorHeight(0));
+      // driverXbox.b().whileFalse(elevator.setElevator(driverXbox));
+      operatorXbox.y().whileTrue(elevator.setElevatorHeight(0).alongWith(arm.moveToAngle(0.482)));
+      // driverXbox.b().whileFalse(arm.setArmAngle(driverXbox));
+      // driverXbox.b().whileTrue(arm.moveToAngle(0.5));
+      // driverXbox.y().onTrue(arm.moveToAngle(0));
+      // driverXbox.b().whileTrue(arm.moveIntake(1));
+      // driverXbox.y().whileTrue(arm.moveIntake(-1));
+      // driverXbox.b().negate().and(driverXbox.y().negate()).whileTrue(arm.moveIntake(0));
+      elevator.setDefaultCommand(elevator.setElevator(operatorXbox));
+      arm.setDefaultCommand(arm.setArm(operatorXbox));
+      intake.setDefaultCommand(intake.setIntake(operatorXbox));
       driverXbox.start().whileTrue(Commands.none());
       driverXbox.back().whileTrue(Commands.none());
       driverXbox.leftBumper().whileTrue(Commands.runOnce(drivebase::lock, drivebase).repeatedly());
       driverXbox.rightBumper().onTrue(Commands.none());
+      
     }
 
   }
@@ -194,7 +211,7 @@ public class RobotContainer
   public Command getAutonomousCommand()
   {
     // An example command will be run in autonomous
-    return drivebase.getAutonomousCommand("New Auto");
+    return drivebase.getAutonomousCommand("Simple");
   }
 
   public void setMotorBrake(boolean brake)

@@ -24,10 +24,10 @@ import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.Distance;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.RobotController;
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.simulation.BatterySim;
 import edu.wpi.first.wpilibj.simulation.ElevatorSim;
 import edu.wpi.first.wpilibj.simulation.RoboRioSim;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -164,8 +164,7 @@ public class Elevator extends SubsystemBase {
     }
 
     public void set(double speed){
-        System.out.println("setting speed " + speed);
-        VoltageOut command = new VoltageOut(speed * 12);
+        VoltageOut command = new VoltageOut(-speed * 12);
         elevatorMotor_1.setControl(command);
         elevatorMotor_2.setControl(command);
     }
@@ -196,6 +195,8 @@ public class Elevator extends SubsystemBase {
     @Override
     public void periodic()
     {
+        SmartDashboard.putNumber("Elevator1", elevatorMotor_1.getPosition().getValueAsDouble());
+        SmartDashboard.putNumber("Elevator2", elevatorMotor_2.getPosition().getValueAsDouble());
     }
     
     //TODO: zero elevator
