@@ -28,19 +28,25 @@ public class Intake extends SubsystemBase {
         intakeMotor.set(speed);
     }
 
-    public Command setIntake(CommandXboxController xbox){
+    public Command manualIntake(CommandXboxController xbox){
         return run(() -> {
-            if (xbox.leftBumper().getAsBoolean())
-                set(1);
-            else if (xbox.rightBumper().getAsBoolean())
-                set(-1);
-            else
-                set(0);
+            // if (xbox.leftBumper().getAsBoolean())
+            //     set(1);
+            // else if (xbox.rightBumper().getAsBoolean())
+            //     set(-1);
+            // else
+            //     set(0);
+            double speed = xbox.getLeftTriggerAxis() - xbox.getRightTriggerAxis();
+            set(speed);
         });
     }
 
     public void stopIntake() {
         intakeMotor.set(0.0);
+    }
+
+    public double getCurrentDrawAmps(){
+        return intakeMotor.getOutputCurrent();
     }
 
     @Override

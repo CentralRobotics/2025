@@ -12,10 +12,12 @@ import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.ctre.phoenix6.signals.SensorDirectionValue;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import frc.robot.Constants;
 import frc.robot.Constants.ArmConstants;
 
 public class Arm extends SubsystemBase {
@@ -54,9 +56,22 @@ public class Arm extends SubsystemBase {
         armMotor.getConfigurator().apply(armConfig);
 
         sensorConfig.MagnetSensor.SensorDirection = SensorDirectionValue.Clockwise_Positive;
-        sensor.setPosition(sensor.getAbsolutePosition().getValue());
+        sensorConfig.MagnetSensor.MagnetOffset = -0.446;
         sensor.getConfigurator().apply(sensorConfig);
+
+        double position = sensor.getAbsolutePosition().getValueAsDouble();
+        if (position < ArmConstants.REVERSE_LIMIT)
+            position += 1;
+        sensor.setPosition(sensor.getAbsolutePosition().getValueAsDouble());
+        System.out.println("setting position to " + position);
         // sensor.setPosition(ArmConstants.REVERSE_LIMIT);
+    }
+
+    public boolean aroundAngle(double angle){
+        return aroundAngle(angle, ArmConstants.kArmDefaultTolerance);
+    }
+    public boolean aroundAngle(double angle, double tolerance){
+        return MathUtil.isNear(angle,armMotor.getPosition().getValueAsDouble(),tolerance);
     }
 
     public void setArmAngle(double angle) {
@@ -75,8 +90,18 @@ public class Arm extends SubsystemBase {
         armMotor.setControl(command);
     }
 
-    public Command setArm(CommandXboxController xbox){
-        return run(() -> setArm(xbox.getRightX())).repeatedly();
+    private double sensitivity (double in, double a) {
+        //ax^3+(1-a)x
+        return ((a*in*in*in)+(1-a)*in);
+    }
+
+    public Command manualArm(CommandXboxController xbox){
+        return run(() -> {
+            if (xbox.leftBumper().getAsBoolean() || Constants.alwaysManual) 
+                setArm(sensitivity(xbox.getRightX(), 0.6));
+                //cube input
+
+        });
     }
 
     public void stopArm() {
@@ -86,5 +111,7 @@ public class Arm extends SubsystemBase {
     @Override
     public void periodic() {
         SmartDashboard.putNumber("Arm", armMotor.getPosition().getValueAsDouble());
+        SmartDashboard.putNumber("ArmSensor", sensor.getPosition().getValueAsDouble());
+        SmartDashboard.putNumber("ArmSensorAbs", sensor.getAbsolutePosition().getValueAsDouble());
     }
 }

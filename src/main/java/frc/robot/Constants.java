@@ -30,6 +30,8 @@ public final class Constants
   public static final double MAX_SPEED  = Units.feetToMeters(14.5);
   // Maximum speed of the robot in meters per second, used to limit acceleration.
 
+  public static final boolean alwaysManual = false;
+
 //  public static final class AutonConstants
 //  {
 //
@@ -82,13 +84,14 @@ public final class ElevatorConstants{
     public static final double kG = 0.01;
     public static final double kV = 0.0;
     public static final double kA = 0.0;
-    public static final double kP = 17.0;
+    public static final double kP = 13.0;
     public static final double kI = 0.0;
     public static final double kD = 0.0;
     public static final double FORWARD_LIMIT = 0.6;
     public static final double REVERSE_LIMIT = -0.13;
     public static final int ARM_CANCODER_ID = 1;
     public static final double INTAKE_SPEED = 0;
+    public static final double kArmDefaultTolerance = 0.01;
   }
 
   public static final class IntakeConstants

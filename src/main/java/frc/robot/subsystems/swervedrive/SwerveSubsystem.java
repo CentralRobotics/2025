@@ -88,7 +88,8 @@ public class SwerveSubsystem extends SubsystemBase
                                                                       Meter.of(4)),
                                                     Rotation2d.fromDegrees(180));
     // Configure the Telemetry before creating the SwerveDrive to avoid unnecessary objects being created.
-    SwerveDriveTelemetry.verbosity = TelemetryVerbosity.HIGH;
+    // SwerveDriveTelemetry.verbosity = TelemetryVerbosity.HIGH;
+    SwerveDriveTelemetry.verbosity = TelemetryVerbosity.NONE;
     try
     {
       swerveDrive = new SwerveParser(directory).createSwerveDrive(Constants.MAX_SPEED, startingPose);
@@ -105,7 +106,7 @@ public class SwerveSubsystem extends SubsystemBase
 
     poseEstimator = new PoseEstimator(() -> swerveDrive.getSimulationDriveTrainPose().get());
     Camera centerCamera = new Camera("Center", centerCameraTranslation, centerCameraRotation, VecBuilder.fill(5, 5, 9), VecBuilder.fill(1, 1, 2));
-    poseEstimator.addCameras(centerCamera);
+    // poseEstimator.addCameras(centerCamera);
 
     setupPathPlanner();
     RobotModeTriggers.autonomous().onTrue(Commands.runOnce(this::zeroGyroWithAlliance));

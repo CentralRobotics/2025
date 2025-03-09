@@ -1,20 +1,15 @@
 package frc.robot.subsystems;
 
 import static edu.wpi.first.units.Units.Meters;
-import static edu.wpi.first.units.Units.RPM;
 import static edu.wpi.first.units.Units.Rotations;
-import static edu.wpi.first.units.Units.Second;
 
-import com.ctre.phoenix6.configs.CANcoderConfiguration;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.PositionDutyCycle;
 import com.ctre.phoenix6.controls.VoltageOut;
-import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.GravityTypeValue;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
-import com.ctre.phoenix6.sim.CANcoderSimState;
 import com.ctre.phoenix6.sim.TalonFXSimState;
 
 import edu.wpi.first.math.MathUtil;
@@ -31,6 +26,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import frc.robot.Constants;
 import frc.robot.Constants.ElevatorConstants;
 
 public class Elevator extends SubsystemBase {
@@ -38,14 +34,14 @@ public class Elevator extends SubsystemBase {
     TalonFX elevatorMotor_2 = new TalonFX(ElevatorConstants.RIGHT_ELEVATOR_MOTOR_ID);
     TalonFXConfiguration elevatorConfig = new TalonFXConfiguration();
 
-    CANcoder sensor = new CANcoder(ElevatorConstants.ELEVATOR_CANCODER_ID);
-    CANcoderConfiguration sensorConfig = new CANcoderConfiguration();
+    // CANcoder sensor = new CANcoder(ElevatorConstants.ELEVATOR_CANCODER_ID);
+    // CANcoderConfiguration sensorConfig = new CANcoderConfiguration();
 
     private ElevatorSim m_elevatorSim = null;
     private DCMotor m_motorSim = DCMotor.getKrakenX60(2);
     private final TalonFXSimState leftSim = elevatorMotor_1.getSimState();
     private final TalonFXSimState rightSim = elevatorMotor_1.getSimState();
-    private final CANcoderSimState sensorSim = sensor.getSimState();
+    // private final CANcoderSimState sensorSim = sensor.getSimState();
 
     public Elevator() {
 
@@ -62,9 +58,9 @@ public class Elevator extends SubsystemBase {
 
         elevatorConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;
         elevatorConfig.SoftwareLimitSwitch.ForwardSoftLimitEnable = true;
-        elevatorConfig.SoftwareLimitSwitch.ForwardSoftLimitThreshold = 50; //TODO find this value
-        elevatorConfig.SoftwareLimitSwitch.ReverseSoftLimitEnable = false;
-        elevatorConfig.SoftwareLimitSwitch.ReverseSoftLimitThreshold = 0; //TODO find this value
+        elevatorConfig.SoftwareLimitSwitch.ForwardSoftLimitThreshold = 80;
+        elevatorConfig.SoftwareLimitSwitch.ReverseSoftLimitEnable = true;
+        elevatorConfig.SoftwareLimitSwitch.ReverseSoftLimitThreshold = 0;
         
         elevatorConfig.Slot0.GravityType = GravityTypeValue.Elevator_Static;
         elevatorConfig.Slot0.kG = ElevatorConstants.kG;
@@ -102,7 +98,7 @@ public class Elevator extends SubsystemBase {
     }
 
     public void simulationPeriodic() {
-        sensorSim.setSupplyVoltage(RobotController.getBatteryVoltage());
+        // sensorSim.setSupplyVoltage(RobotController.getBatteryVoltage());
         leftSim.setSupplyVoltage(RobotController.getBatteryVoltage());
         rightSim.setSupplyVoltage(RobotController.getBatteryVoltage());
 
@@ -112,19 +108,19 @@ public class Elevator extends SubsystemBase {
         //update-every 20 milliseconds
         m_elevatorSim.update(0.02);
 
-        sensorSim.setRawPosition(convertDistanceToRotations(Meters.of(m_elevatorSim.getPositionMeters())));
-        sensorSim.setVelocity(Elevator.convertDistanceToRotations(Meters.of(m_elevatorSim.getVelocityMetersPerSecond())).per(Second).in(RPM));
+        // sensorSim.setRawPosition(convertDistanceToRotations(Meters.of(m_elevatorSim.getPositionMeters())));
+        // sensorSim.setVelocity(Elevator.convertDistanceToRotations(Meters.of(m_elevatorSim.getVelocityMetersPerSecond())).per(Second).in(RPM));
 
         RoboRioSim.setVInVoltage(BatterySim.calculateDefaultBatteryLoadedVoltage(m_elevatorSim.getCurrentDrawAmps()));
 
     }
 
     public double getPositionMeters() {
-        return convertRotationsToDistance(sensor.getPosition().getValueAsDouble());
+        return convertRotationsToDistance(elevatorMotor_1.getPosition().getValueAsDouble());
     }
 
     public double getVelocityMetersPerSecond() {
-        return convertRotationsToDistance(sensor.getVelocity().getValueAsDouble());
+        return convertRotationsToDistance(elevatorMotor_1.getVelocity().getValueAsDouble());
     }
 
     private double setHeight;
@@ -173,8 +169,17 @@ public class Elevator extends SubsystemBase {
         return run(() -> set(speed));
     }
 
-    public Command setElevator(CommandXboxController xbox){
-        return run(() -> set(xbox.getLeftY()));
+    private double sensitivity (double in, double a) {
+        //ax^3+(1-a)x
+        return ((a*in*in*in)+(1-a)*in);
+    }
+
+    public Command manualElevator(CommandXboxController xbox){
+        return run(() -> {
+            if (xbox.leftBumper().getAsBoolean() || Constants.alwaysManual)
+                set(sensitivity(xbox.getLeftY(), 0.6));
+
+        });
     }
 
      /**
@@ -195,8 +200,8 @@ public class Elevator extends SubsystemBase {
     @Override
     public void periodic()
     {
-        SmartDashboard.putNumber("Elevator1", elevatorMotor_1.getPosition().getValueAsDouble());
-        SmartDashboard.putNumber("Elevator2", elevatorMotor_2.getPosition().getValueAsDouble());
+        SmartDashboard.putNumber("Elevator", getPositionMeters());
+        SmartDashboard.putNumber("ElevatorRaw", elevatorMotor_1.getPosition().getValueAsDouble());
     }
     
     //TODO: zero elevator

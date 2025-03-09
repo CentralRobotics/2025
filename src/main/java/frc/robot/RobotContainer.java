@@ -22,10 +22,17 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.commands.ClimbIn;
+import frc.robot.commands.ClimbOut;
+import frc.robot.commands.GoToIntake;
+import frc.robot.commands.L1;
+import frc.robot.commands.L2;
+import frc.robot.commands.L3;
+import frc.robot.commands.swervedrive.drivebase.RelitiveDrive;
 import frc.robot.subsystems.Arm;
+import frc.robot.subsystems.Climb;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Intake;
-import frc.robot.subsystems.Pneumatics;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import swervelib.SwerveInputStream;
 
@@ -45,7 +52,7 @@ public class RobotContainer
   private final Elevator              elevator   = new Elevator();
   private final Arm                   arm        = new Arm();
   private final Intake                intake     = new Intake();
-  private final Pneumatics            pneumatics = new Pneumatics();
+  private final Climb                 climb      = new Climb();
   // private final Led                   led        = new Led();
 
   /**
@@ -191,14 +198,22 @@ public class RobotContainer
       // driverXbox.b().whileTrue(arm.moveIntake(1));
       // driverXbox.y().whileTrue(arm.moveIntake(-1));
       // driverXbox.b().negate().and(driverXbox.y().negate()).whileTrue(arm.moveIntake(0));
-      elevator.setDefaultCommand(elevator.setElevator(operatorXbox));
-      arm.setDefaultCommand(arm.setArm(operatorXbox));
-      intake.setDefaultCommand(intake.setIntake(operatorXbox));
       driverXbox.start().whileTrue(Commands.none());
       driverXbox.back().whileTrue(Commands.none());
       driverXbox.leftBumper().whileTrue(Commands.runOnce(drivebase::lock, drivebase).repeatedly());
       driverXbox.rightBumper().onTrue(Commands.none());
       
+      elevator.setDefaultCommand(elevator.manualElevator(operatorXbox));
+      arm.setDefaultCommand(arm.manualArm(operatorXbox));
+      intake.setDefaultCommand(intake.manualIntake(operatorXbox));
+      // operatorXbox.b().onTrue(new GoToIntake(elevator, arm).andThen(new IntakeCoral(intake)));
+      operatorXbox.b().onTrue(new GoToIntake(elevator, arm));
+      // operatorXbox.povDown().onTrue(new RelitiveDrive(drivebase));
+      operatorXbox.a().onTrue(new L1(elevator, arm));
+      operatorXbox.x().onTrue(new L2(elevator, arm));
+      operatorXbox.y().onTrue(new L3(elevator, arm));
+      operatorXbox.povRight().onTrue(new ClimbOut(climb)).onFalse(new ClimbIn(climb));
+
     }
 
   }
