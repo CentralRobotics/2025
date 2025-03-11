@@ -13,7 +13,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Simple Path"
+            "pathName": "Middle_reef_prep_score_path"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "L2"
           }
         }
       ]

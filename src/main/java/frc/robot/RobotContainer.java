@@ -17,6 +17,8 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.RobotBase;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -28,7 +30,6 @@ import frc.robot.commands.GoToIntake;
 import frc.robot.commands.L1;
 import frc.robot.commands.L2;
 import frc.robot.commands.L3;
-import frc.robot.commands.swervedrive.drivebase.RelitiveDrive;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Climb;
 import frc.robot.subsystems.Elevator;
@@ -55,15 +56,21 @@ public class RobotContainer
   private final Climb                 climb      = new Climb();
   // private final Led                   led        = new Led();
 
+  private final SendableChooser<String> autoChooser = new SendableChooser<>();
+  private static final String autoSimple = "Simple";
+  private static final String autoLeft = "Left_reef_prep_score";
+  private static final String autoCenter = "Middle_reef_prep_score";
+  private static final String autoRight = "Right_reef_prep_score";
+
   /**
    * Converts driver input into a field-relative ChassisSpeeds that is controlled by angular velocity.
    */
   SwerveInputStream driveAngularVelocity = SwerveInputStream.of(drivebase.getSwerveDrive(),
-                                                                () -> driverXbox.getLeftY() * -1,
-                                                                () -> driverXbox.getLeftX() * -1)
-                                                            .withControllerRotationAxis(driverXbox::getRightX)
+                                                                () -> driverXbox.getLeftY() * (driverXbox.leftBumper().getAsBoolean() ? -0.25 : -1),
+                                                                () -> driverXbox.getLeftX() * (driverXbox.leftBumper().getAsBoolean() ? -0.25 : -1))
+                                                            .withControllerRotationAxis(() -> driverXbox.getRightX() * (driverXbox.leftBumper().getAsBoolean() ? -0.25 : -1))
                                                             .deadband(OperatorConstants.DEADBAND)
-                                                            .scaleTranslation(0.8)
+                                                            .scaleTranslation(1)
                                                             .allianceRelativeControl(true);
 
   /**
@@ -77,7 +84,7 @@ public class RobotContainer
    * Clone's the angular velocity input stream and converts it to a robotRelative input stream.
    */
   SwerveInputStream driveRobotOriented = driveAngularVelocity.copy().robotRelative(true)
-                                                             .allianceRelativeControl(false);
+                                                             .allianceRelativeControl(true);
 
   SwerveInputStream driveAngularVelocityKeyboard = SwerveInputStream.of(drivebase.getSwerveDrive(),
                                                                         () -> -driverXbox.getLeftY(),
@@ -117,6 +124,14 @@ public class RobotContainer
     configureBindings();
     DriverStation.silenceJoystickConnectionWarning(true);
     NamedCommands.registerCommand("test", Commands.print("I EXIST"));
+    NamedCommands.registerCommand("L1", new L1(elevator, arm));
+    NamedCommands.registerCommand("L2", new L2(elevator, arm));
+    NamedCommands.registerCommand("L3", new L3(elevator, arm));
+    autoChooser.setDefaultOption(autoSimple, autoSimple);
+    autoChooser.addOption(autoLeft, autoLeft);
+    autoChooser.addOption(autoCenter, autoCenter);
+    autoChooser.addOption(autoRight, autoRight);
+    SmartDashboard.putData("auto", autoChooser);
   }
 
   /**
@@ -181,7 +196,7 @@ public class RobotContainer
       driverXbox.y().whileTrue(drivebase.driveToDistanceCommand(1.0, 0.2));
       driverXbox.start().onTrue((Commands.runOnce(drivebase::zeroGyro)));
       driverXbox.back().whileTrue(drivebase.centerModulesCommand());
-      driverXbox.leftBumper().onTrue(Commands.none());
+      // driverXbox.leftBumper().onTrue(Commands.none());
       driverXbox.rightBumper().onTrue(Commands.none());
     } else
     {
@@ -200,8 +215,8 @@ public class RobotContainer
       // driverXbox.b().negate().and(driverXbox.y().negate()).whileTrue(arm.moveIntake(0));
       driverXbox.start().whileTrue(Commands.none());
       driverXbox.back().whileTrue(Commands.none());
-      driverXbox.leftBumper().whileTrue(Commands.runOnce(drivebase::lock, drivebase).repeatedly());
-      driverXbox.rightBumper().onTrue(Commands.none());
+      driverXbox.rightBumper().whileTrue(Commands.runOnce(drivebase::lock, drivebase).repeatedly());
+      // driverXbox.rightBumper().onTrue(Commands.none());
       
       elevator.setDefaultCommand(elevator.manualElevator(operatorXbox));
       arm.setDefaultCommand(arm.manualArm(operatorXbox));
@@ -226,7 +241,7 @@ public class RobotContainer
   public Command getAutonomousCommand()
   {
     // An example command will be run in autonomous
-    return drivebase.getAutonomousCommand("Simple");
+    return drivebase.getAutonomousCommand(autoChooser.getSelected());
   }
 
   public void setMotorBrake(boolean brake)
