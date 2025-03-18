@@ -1,32 +1,68 @@
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.PneumaticHub;
-import edu.wpi.first.wpilibj.Solenoid;
+import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.controls.VoltageOut;
+import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.InvertedValue;
+import com.ctre.phoenix6.signals.NeutralModeValue;
+
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import frc.robot.Constants.ClimbConstants;
 
 public class Climb extends SubsystemBase {
-
-    PneumaticHub m_pH = new PneumaticHub(1);
-    Solenoid m_solenoidClimb = m_pH.makeSolenoid(0);
+    private final TalonFX climbMotor = new TalonFX(ClimbConstants.CLIMB_MOTOR_ID);
+    private final TalonFXConfiguration climbConfig = new TalonFXConfiguration();
+    
 
     public Climb() {
-        m_pH.enableCompressorAnalog(100,120);
-        retractClimb();
+        climbConfig.CurrentLimits.SupplyCurrentLimitEnable = true;
+        climbConfig.CurrentLimits.SupplyCurrentLimit = 40;
+        climbConfig.CurrentLimits.SupplyCurrentLowerLimit = 80;
+        climbConfig.CurrentLimits.SupplyCurrentLowerTime = 0.1;
+
+        climbConfig.ClosedLoopRamps.VoltageClosedLoopRampPeriod = 0.25;
+
+        climbConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;
+        climbConfig.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
+        climbConfig.SoftwareLimitSwitch.ForwardSoftLimitEnable = false;
+        climbConfig.SoftwareLimitSwitch.ReverseSoftLimitEnable = false;
+        climbConfig.SoftwareLimitSwitch.ForwardSoftLimitThreshold = ClimbConstants.FORWARD_LIMIT;
+        climbConfig.SoftwareLimitSwitch.ReverseSoftLimitThreshold = ClimbConstants.REVERSE_LIMIT;
+        
+        climbConfig.Slot0.kG = ClimbConstants.kG;
+        climbConfig.Slot0.kV = ClimbConstants.kV;
+        climbConfig.Slot0.kA = ClimbConstants.kA;
+        climbConfig.Slot0.kP = ClimbConstants.kP;
+        climbConfig.Slot0.kI = ClimbConstants.kI;
+        climbConfig.Slot0.kD = ClimbConstants.kD;
+
+        climbMotor.getConfigurator().apply(climbConfig);
     }
 
     public void extendClimb() {
         System.out.println("extending climb");
-        m_solenoidClimb.set(true);
     }
     
     public void retractClimb() {
         System.out.println("retracting climb");
-        m_solenoidClimb.set(false);
+    }
+
+    public void setClimb(double speed) {
+        climbMotor.setControl(new VoltageOut(speed * 12));
+    }
+
+    public Command manualClimb(CommandXboxController xbox){
+        return run(() -> {
+            double speed = xbox.getLeftTriggerAxis() - xbox.getRightTriggerAxis();
+            setClimb(speed);
+        });
     }
 
     @Override
     public void periodic() {
-        SmartDashboard.putNumber("Pressure", m_pH.getPressure(0));
+        SmartDashboard.putNumber("Climb position", climbMotor.getPosition().getValueAsDouble());
     }
 }

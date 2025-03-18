@@ -94,6 +94,25 @@ public final class ElevatorConstants{
     public static final double kArmDefaultTolerance = 0.01;
   }
 
+  public static final class ClimbConstants
+  {
+    public static final int CLIMB_MOTOR_ID = 31;
+    public static final double CLIMB_GEAR_RATIO = 1;
+    public static final double CLIMB_LENGTH_METERS = Units.inchesToMeters(0);
+    public static final double CLIMB_MAX_ANGLE = 180.0; // degrees
+    public static final double CLIMB_MIN_ANGLE = 0.0; // degrees
+    public static final double kG = 0.01;
+    public static final double kV = 0.0;
+    public static final double kA = 0.0;
+    public static final double kP = 0.0;
+    public static final double kI = 0.0;
+    public static final double kD = 0.0;
+    public static final double FORWARD_LIMIT = 0.6;
+    public static final double REVERSE_LIMIT = -0.13;
+    public static final double INTAKE_SPEED = 0;
+    public static final double kCLIMBDefaultTolerance = 0.01;
+  }
+
   public static final class IntakeConstants
   {
     public static final int INTAKE_MOTOR_ID = 21;

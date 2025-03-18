@@ -28,6 +28,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants;
 import frc.robot.Constants.ElevatorConstants;
+import frc.robot.Utils;
 
 public class Elevator extends SubsystemBase {
     TalonFX elevatorMotor_1 = new TalonFX(ElevatorConstants.LEFT_ELEVATOR_MOTOR_ID);
@@ -58,7 +59,7 @@ public class Elevator extends SubsystemBase {
 
         elevatorConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;
         elevatorConfig.SoftwareLimitSwitch.ForwardSoftLimitEnable = true;
-        elevatorConfig.SoftwareLimitSwitch.ForwardSoftLimitThreshold = 80;
+        elevatorConfig.SoftwareLimitSwitch.ForwardSoftLimitThreshold = 90;
         elevatorConfig.SoftwareLimitSwitch.ReverseSoftLimitEnable = true;
         elevatorConfig.SoftwareLimitSwitch.ReverseSoftLimitThreshold = 0;
         
@@ -169,16 +170,10 @@ public class Elevator extends SubsystemBase {
         return run(() -> set(speed));
     }
 
-    private double sensitivity (double in, double a) {
-        //ax^3+(1-a)x
-        return ((a*in*in*in)+(1-a)*in);
-    }
-
     public Command manualElevator(CommandXboxController xbox){
         return run(() -> {
             if (xbox.leftBumper().getAsBoolean() || Constants.alwaysManual)
-                set(sensitivity(xbox.getLeftY(), 0.6));
-
+                set(Utils.sensitivity(xbox.getLeftY(), 0.6));
         });
     }
 

@@ -218,6 +218,7 @@ public class RobotContainer
       driverXbox.rightBumper().whileTrue(Commands.runOnce(drivebase::lock, drivebase).repeatedly());
       // driverXbox.rightBumper().onTrue(Commands.none());
       
+      climb.setDefaultCommand(climb.manualClimb(driverXbox));
       elevator.setDefaultCommand(elevator.manualElevator(operatorXbox));
       arm.setDefaultCommand(arm.manualArm(operatorXbox));
       intake.setDefaultCommand(intake.manualIntake(operatorXbox));

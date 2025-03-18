@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants;
 import frc.robot.Constants.ArmConstants;
+import frc.robot.Utils;
 
 public class Arm extends SubsystemBase {
     private final TalonFX armMotor = new TalonFX(ArmConstants.ARM_MOTOR_ID);
@@ -90,17 +91,10 @@ public class Arm extends SubsystemBase {
         armMotor.setControl(command);
     }
 
-    private double sensitivity (double in, double a) {
-        //ax^3+(1-a)x
-        return ((a*in*in*in)+(1-a)*in);
-    }
-
     public Command manualArm(CommandXboxController xbox){
         return run(() -> {
             if (xbox.leftBumper().getAsBoolean() || Constants.alwaysManual) 
-                setArm(sensitivity(xbox.getRightX(), 0.6));
-                //cube input
-
+                setArm(Utils.sensitivity(xbox.getRightX(), 0.6));
         });
     }
 
