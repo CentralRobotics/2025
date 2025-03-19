@@ -39,5 +39,6 @@ public class L2 extends Command{
     @Override
     public void end(boolean interrupted)
     {
+        System.out.println("L2 finished");
     }
 }

@@ -216,8 +216,9 @@ public class RobotContainer
       driverXbox.start().whileTrue(Commands.none());
       driverXbox.back().whileTrue(Commands.none());
       driverXbox.rightBumper().whileTrue(Commands.runOnce(drivebase::lock, drivebase).repeatedly());
+     // driverXbox.b().onTrue(new driveToPose());
       // driverXbox.rightBumper().onTrue(Commands.none());
-      
+      // driverXbox.b().onTrue(new AbsoluteDrive(drivebase, null, null, null, null));
       climb.setDefaultCommand(climb.manualClimb(driverXbox));
       elevator.setDefaultCommand(elevator.manualElevator(operatorXbox));
       arm.setDefaultCommand(arm.manualArm(operatorXbox));

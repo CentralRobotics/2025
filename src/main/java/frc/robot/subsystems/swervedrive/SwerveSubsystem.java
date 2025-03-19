@@ -106,7 +106,7 @@ public class SwerveSubsystem extends SubsystemBase
 
     poseEstimator = new PoseEstimator(() -> swerveDrive.getSimulationDriveTrainPose().get());
     Camera centerCamera = new Camera("Center", centerCameraTranslation, centerCameraRotation, VecBuilder.fill(5, 5, 9), VecBuilder.fill(1, 1, 2));
-    // poseEstimator.addCameras(centerCamera);
+    poseEstimator.addCameras(centerCamera);
 
     setupPathPlanner();
     RobotModeTriggers.autonomous().onTrue(Commands.runOnce(this::zeroGyroWithAlliance));

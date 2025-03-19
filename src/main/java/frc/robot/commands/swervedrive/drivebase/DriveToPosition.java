@@ -1,17 +1,20 @@
 package frc.robot.commands.swervedrive.drivebase;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 
-public class RelitiveDrive extends Command{
+public class DriveToPosition extends Command{
 
     private final SwerveSubsystem drive;
 
     private Translation2d init;
+    private Pose2d pose;
     
-    public RelitiveDrive(SwerveSubsystem drive) {
+    public DriveToPosition(SwerveSubsystem drive) {
         this.drive = drive;
         addRequirements(drive);
     }
@@ -20,7 +23,8 @@ public class RelitiveDrive extends Command{
     public void initialize()
     {
         init = drive.getPose().getTranslation();
-        drive.drive(new ChassisSpeeds(0.3, 0, 0));
+        pose = drive.getPose().plus(new Transform2d(1, 0.5, new Rotation2d(30)));
+        drive.driveToPose(pose);
     }
 
     @Override
@@ -38,5 +42,6 @@ public class RelitiveDrive extends Command{
     @Override
     public void end(boolean interrupted)
     {
+        System.out.println("DriveToPosition finished");
     }
 }
