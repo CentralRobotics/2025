@@ -69,7 +69,7 @@ public class SwerveSubsystem extends SubsystemBase
   private final SwerveDrive swerveDrive;
 
   private final PoseEstimator poseEstimator;
-  private final Translation3d centerCameraTranslation = new Translation3d(Inches.of(-3.018).in(Meters), Inches.of(-0.65).in(Meters), Inches.of(35.038).in(Meters));
+  private final Translation3d centerCameraTranslation = new Translation3d(Inches.of(-2.5).in(Meters), Inches.of(4.25).in(Meters), Inches.of(35.125).in(Meters));
   private final Rotation3d centerCameraRotation = new Rotation3d(Degrees.of(0).in(Radians), Degrees.of(0).in(Radians), Degrees.of(0).in(Radians));
 
 
@@ -89,7 +89,7 @@ public class SwerveSubsystem extends SubsystemBase
                                                     Rotation2d.fromDegrees(180));
     // Configure the Telemetry before creating the SwerveDrive to avoid unnecessary objects being created.
     // SwerveDriveTelemetry.verbosity = TelemetryVerbosity.HIGH;
-    SwerveDriveTelemetry.verbosity = TelemetryVerbosity.NONE;
+    SwerveDriveTelemetry.verbosity = TelemetryVerbosity.HIGH;
     try
     {
       swerveDrive = new SwerveParser(directory).createSwerveDrive(Constants.MAX_SPEED, startingPose);
@@ -161,9 +161,9 @@ public class SwerveSubsystem extends SubsystemBase
           // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds. Also optionally outputs individual module feedforwards
           new PPHolonomicDriveController(
               // PPHolonomicController is the built in path following controller for holonomic drive trains
-              new PIDConstants(5.0, 0.0, 0.0),
+              new PIDConstants(1.0, 0.0, 0.0),
               // Translation PID constants
-              new PIDConstants(5.0, 0.0, 0.0)
+              new PIDConstants(1.0, 0.0, 0.0)
               // Rotation PID constants
           ),
           config,

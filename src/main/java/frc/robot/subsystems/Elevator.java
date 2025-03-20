@@ -4,6 +4,7 @@ import static edu.wpi.first.units.Units.Meters;
 import static edu.wpi.first.units.Units.Rotations;
 
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.PositionDutyCycle;
 import com.ctre.phoenix6.controls.VoltageOut;
 import com.ctre.phoenix6.hardware.TalonFX;
@@ -71,17 +72,18 @@ public class Elevator extends SubsystemBase {
         elevatorConfig.Slot0.kI = ElevatorConstants.kI;
         elevatorConfig.Slot0.kD = ElevatorConstants.kD;
 
-        elevatorConfig.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
+        elevatorConfig.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
 
         // elevatorConfig.Feedback.FeedbackSensorSource = FeedbackSensorSourceValue.RemoteCANcoder;
         // elevatorConfig.Feedback.FeedbackRemoteSensorID = ElevatorConstants.ELEVATOR_CANCODER_ID;
 
-        elevatorMotor_1.getConfigurator().apply(elevatorConfig);
         elevatorMotor_2.getConfigurator().apply(elevatorConfig);
+        // elevatorConfig.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
+        elevatorMotor_1.getConfigurator().apply(elevatorConfig);
 
         elevatorMotor_1.setPosition(0);
         elevatorMotor_2.setPosition(0);
-
+        elevatorMotor_2.setControl(new Follower(ElevatorConstants.LEFT_ELEVATOR_MOTOR_ID, true));
 
         if (RobotBase.isSimulation()) {
             m_elevatorSim = new ElevatorSim(m_motorSim,
@@ -130,7 +132,7 @@ public class Elevator extends SubsystemBase {
         setHeight = goal;
         PositionDutyCycle command = new PositionDutyCycle(convertDistanceToRotations(Meters.of(goal)));
         elevatorMotor_1.setControl(command);
-        elevatorMotor_2.setControl(command);
+        // elevatorMotor_2.setControl(command);
     }
 
     public Command setGoal(double goal){
@@ -161,9 +163,9 @@ public class Elevator extends SubsystemBase {
     }
 
     public void set(double speed){
-        VoltageOut command = new VoltageOut(-speed * 12);
+        VoltageOut command = new VoltageOut(speed * 12);
         elevatorMotor_1.setControl(command);
-        elevatorMotor_2.setControl(command);
+        // elevatorMotor_2.setControl(command);
     }
 
     public Command setElevator(double speed){

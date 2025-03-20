@@ -61,14 +61,15 @@ public class RobotContainer
   private static final String autoLeft = "Left_reef_prep_score";
   private static final String autoCenter = "Middle_reef_prep_score";
   private static final String autoRight = "Right_reef_prep_score";
+  private static final String threePiece = "3 piece";
 
   /**
    * Converts driver input into a field-relative ChassisSpeeds that is controlled by angular velocity.
    */
   SwerveInputStream driveAngularVelocity = SwerveInputStream.of(drivebase.getSwerveDrive(),
-                                                                () -> driverXbox.getLeftY() * (driverXbox.leftBumper().getAsBoolean() ? -0.25 : -1),
-                                                                () -> driverXbox.getLeftX() * (driverXbox.leftBumper().getAsBoolean() ? -0.25 : -1))
-                                                            .withControllerRotationAxis(() -> driverXbox.getRightX() * (driverXbox.leftBumper().getAsBoolean() ? -0.25 : -1))
+                                                                () -> Utils.sensitivity(driverXbox.getLeftY() * -1,0.6),
+                                                                () -> Utils.sensitivity(driverXbox.getLeftX() * -1,0.6))
+                                                            .withControllerRotationAxis(() -> Utils.sensitivity(driverXbox.getRightX() * -1,0.6))
                                                             .deadband(OperatorConstants.DEADBAND)
                                                             .scaleTranslation(1)
                                                             .allianceRelativeControl(true);
@@ -131,6 +132,7 @@ public class RobotContainer
     autoChooser.addOption(autoLeft, autoLeft);
     autoChooser.addOption(autoCenter, autoCenter);
     autoChooser.addOption(autoRight, autoRight);
+    autoChooser.addOption(threePiece, threePiece);
     SmartDashboard.putData("auto", autoChooser);
   }
 
@@ -200,8 +202,8 @@ public class RobotContainer
       driverXbox.rightBumper().onTrue(Commands.none());
     } else
     {
-      driverXbox.a().onTrue((Commands.runOnce(drivebase::zeroGyro)));
-      driverXbox.x().onTrue(Commands.runOnce(drivebase::addFakeVisionReading));
+      driverXbox.a().onTrue((Commands.runOnce(drivebase::zeroGyroWithAlliance)));
+      // driverXbox.x().onTrue(Commands.runOnce(drivebase::addFakeVisionReading));
       // driverXbox.b().whileTrue(drivebase.sysIdDriveMotorCommand());
       // driverXbox.y().whileTrue(drivebase.sysIdAngleMotorCommand());
       // driverXbox.b().whileTrue(elevator.setElevatorHeight(0));
