@@ -22,6 +22,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.ClimbIn;
@@ -30,6 +31,7 @@ import frc.robot.commands.GoToIntake;
 import frc.robot.commands.L1;
 import frc.robot.commands.L2;
 import frc.robot.commands.L3;
+import frc.robot.commands.ZeroClimber;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Climb;
 import frc.robot.subsystems.Elevator;
@@ -134,6 +136,7 @@ public class RobotContainer
     autoChooser.addOption(autoRight, autoRight);
     autoChooser.addOption(threePiece, threePiece);
     SmartDashboard.putData("auto", autoChooser);
+    RobotModeTriggers.teleop().onTrue(new ZeroClimber(climb));
   }
 
   /**

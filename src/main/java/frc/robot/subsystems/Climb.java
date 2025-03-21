@@ -42,14 +42,6 @@ public class Climb extends SubsystemBase {
         climbMotor.getConfigurator().apply(climbConfig);
     }
 
-    public void extendClimb() {
-        System.out.println("extending climb");
-    }
-    
-    public void retractClimb() {
-        System.out.println("retracting climb");
-    }
-
     public void setClimb(double speed) {
         climbMotor.setControl(new VoltageOut(speed * 12));
     }
@@ -59,6 +51,10 @@ public class Climb extends SubsystemBase {
             double speed = xbox.getLeftTriggerAxis() - xbox.getRightTriggerAxis();
             setClimb(speed);
         });
+    }
+
+    public TalonFX getMotor() {
+        return climbMotor;
     }
 
     @Override
