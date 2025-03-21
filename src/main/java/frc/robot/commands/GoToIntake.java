@@ -10,7 +10,7 @@ public class GoToIntake extends Command{
     private final Arm arm;
 
     private double elevatorHeight = 0;
-    private double armAngle = 0.4646;
+    private double armAngle = 0.472;
 
     public GoToIntake(Elevator elevator, Arm arm) {
         this.elevator = elevator;

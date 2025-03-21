@@ -8,6 +8,7 @@ import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.PositionDutyCycle;
 import com.ctre.phoenix6.controls.VoltageOut;
 import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.ControlModeValue;
 import com.ctre.phoenix6.signals.GravityTypeValue;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
@@ -60,7 +61,7 @@ public class Elevator extends SubsystemBase {
 
         elevatorConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;
         elevatorConfig.SoftwareLimitSwitch.ForwardSoftLimitEnable = true;
-        elevatorConfig.SoftwareLimitSwitch.ForwardSoftLimitThreshold = 90;
+        elevatorConfig.SoftwareLimitSwitch.ForwardSoftLimitThreshold = 95;
         elevatorConfig.SoftwareLimitSwitch.ReverseSoftLimitEnable = true;
         elevatorConfig.SoftwareLimitSwitch.ReverseSoftLimitThreshold = 0;
         
@@ -72,13 +73,12 @@ public class Elevator extends SubsystemBase {
         elevatorConfig.Slot0.kI = ElevatorConstants.kI;
         elevatorConfig.Slot0.kD = ElevatorConstants.kD;
 
-        elevatorConfig.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
+        elevatorConfig.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
 
         // elevatorConfig.Feedback.FeedbackSensorSource = FeedbackSensorSourceValue.RemoteCANcoder;
         // elevatorConfig.Feedback.FeedbackRemoteSensorID = ElevatorConstants.ELEVATOR_CANCODER_ID;
 
         elevatorMotor_2.getConfigurator().apply(elevatorConfig);
-        // elevatorConfig.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
         elevatorMotor_1.getConfigurator().apply(elevatorConfig);
 
         elevatorMotor_1.setPosition(0);
@@ -175,7 +175,10 @@ public class Elevator extends SubsystemBase {
     public Command manualElevator(CommandXboxController xbox){
         return run(() -> {
             if (xbox.leftBumper().getAsBoolean() || Constants.alwaysManual)
-                set(Utils.sensitivity(xbox.getLeftY(), 0.6));
+                set(Utils.sensitivity(xbox.getLeftY() * -1, 0.6));
+            else if (elevatorMotor_1.getControlMode().getValue().equals(ControlModeValue.VoltageOut)){
+                stop();
+            }
         });
     }
 

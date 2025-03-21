@@ -8,8 +8,8 @@ public class L2 extends Command{
 
     private final Elevator elevator;
     private final Arm arm;
-    private double elevatorHeight = 11.419;
-    private double armAngle = 0.577;
+    private double elevatorHeight = 9.6;
+    private double armAngle = 0.592;
 
     public L2(Elevator elevator, Arm arm) {
         this.elevator = elevator;

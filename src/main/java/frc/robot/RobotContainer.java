@@ -67,9 +67,9 @@ public class RobotContainer
    * Converts driver input into a field-relative ChassisSpeeds that is controlled by angular velocity.
    */
   SwerveInputStream driveAngularVelocity = SwerveInputStream.of(drivebase.getSwerveDrive(),
-                                                                () -> Utils.sensitivity(driverXbox.getLeftY() * -1,0.6),
-                                                                () -> Utils.sensitivity(driverXbox.getLeftX() * -1,0.6))
-                                                            .withControllerRotationAxis(() -> Utils.sensitivity(driverXbox.getRightX() * -1,0.6))
+                                                                () -> Utils.sensitivity(driverXbox.getLeftY() * -1,0.75),
+                                                                () -> Utils.sensitivity(driverXbox.getLeftX() * -1,0.75))
+                                                            .withControllerRotationAxis(() -> Utils.sensitivity(driverXbox.getRightX() * -1,0.75))
                                                             .deadband(OperatorConstants.DEADBAND)
                                                             .scaleTranslation(1)
                                                             .allianceRelativeControl(true);
@@ -226,11 +226,11 @@ public class RobotContainer
       arm.setDefaultCommand(arm.manualArm(operatorXbox));
       intake.setDefaultCommand(intake.manualIntake(operatorXbox));
       // operatorXbox.b().onTrue(new GoToIntake(elevator, arm).andThen(new IntakeCoral(intake)));
-      operatorXbox.b().onTrue(new GoToIntake(elevator, arm));
       // operatorXbox.povDown().onTrue(new RelitiveDrive(drivebase));
-      operatorXbox.a().onTrue(new L1(elevator, arm));
-      operatorXbox.x().onTrue(new L2(elevator, arm));
-      operatorXbox.y().onTrue(new L3(elevator, arm));
+      operatorXbox.b().whileTrue(new GoToIntake(elevator, arm));
+      operatorXbox.a().whileTrue(new L1(elevator, arm));
+      operatorXbox.x().whileTrue(new L2(elevator, arm));
+      operatorXbox.y().whileTrue(new L3(elevator, arm));
       operatorXbox.povRight().onTrue(new ClimbOut(climb)).onFalse(new ClimbIn(climb));
 
     }

@@ -6,6 +6,7 @@ import com.ctre.phoenix6.controls.PositionDutyCycle;
 import com.ctre.phoenix6.controls.VoltageOut;
 import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.ControlModeValue;
 import com.ctre.phoenix6.signals.FeedbackSensorSourceValue;
 import com.ctre.phoenix6.signals.GravityTypeValue;
 import com.ctre.phoenix6.signals.InvertedValue;
@@ -61,7 +62,7 @@ public class Arm extends SubsystemBase {
         sensor.getConfigurator().apply(sensorConfig);
 
         double position = sensor.getAbsolutePosition().getValueAsDouble();
-        if (position < -0.125)
+        if (position < -0.2)
             position += 1;
         sensor.setPosition(position);
         System.out.println("setting position to " + position);
@@ -95,6 +96,9 @@ public class Arm extends SubsystemBase {
         return run(() -> {
             if (xbox.leftBumper().getAsBoolean() || Constants.alwaysManual) 
                 setArm(Utils.sensitivity(xbox.getRightX(), 0.6));
+            else if (armMotor.getControlMode().getValue().equals(ControlModeValue.VoltageOut)){
+                stopArm();
+            }
         });
     }
 

@@ -30,7 +30,7 @@ public final class Constants
   public static final double MAX_SPEED  = Units.feetToMeters(14.5);
   // Maximum speed of the robot in meters per second, used to limit acceleration.
 
-  public static final boolean alwaysManual = true;
+  public static final boolean alwaysManual = false;
 
 //  public static final class AutonConstants
 //  {
@@ -68,7 +68,7 @@ public final class ElevatorConstants{
   {
 
     // Joystick Deadband
-    public static final double DEADBAND        = 0.1;
+    public static final double DEADBAND        = 0.03;
     public static final double LEFT_Y_DEADBAND = 0.1;
     public static final double RIGHT_X_DEADBAND = 0.1;
     public static final double TURN_CONSTANT    = 6;
