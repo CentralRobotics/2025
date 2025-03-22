@@ -4,6 +4,7 @@ import com.ctre.phoenix6.configs.SoftwareLimitSwitchConfigs;
 import com.ctre.phoenix6.controls.VoltageOut;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants.ClimbConstants;
 import frc.robot.subsystems.Climb;
 
 public class ZeroClimber extends Command {
@@ -21,7 +22,7 @@ public class ZeroClimber extends Command {
         disable.ForwardSoftLimitEnable = false;
         disable.ReverseSoftLimitEnable = false;
         climb.getMotor().getConfigurator().apply(disable);
-        climb.getMotor().setControl(new VoltageOut(1));
+        climb.getMotor().setControl(new VoltageOut(2));
     }
 
     @Override
@@ -33,16 +34,20 @@ public class ZeroClimber extends Command {
     @Override
     public boolean isFinished()
     {
-        return climb.getMotor().getStatorCurrent().getValueAsDouble() > 3;
+        return climb.getMotor().getStatorCurrent().getValueAsDouble() > 5;
     }
 
     @Override
     public void end(boolean interrupted)
     {
+        climb.setClimb(0);
         SoftwareLimitSwitchConfigs enable = new SoftwareLimitSwitchConfigs();
         enable.ForwardSoftLimitEnable = true;
         enable.ReverseSoftLimitEnable = true;
+        enable.ForwardSoftLimitThreshold = ClimbConstants.FORWARD_LIMIT;
+        enable.ReverseSoftLimitThreshold = ClimbConstants.REVERSE_LIMIT;
         climb.getMotor().getConfigurator().apply(enable);
+        climb.getMotor().setPosition(0);
     }
     
 }

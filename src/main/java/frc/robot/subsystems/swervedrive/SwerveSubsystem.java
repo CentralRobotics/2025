@@ -203,6 +203,7 @@ public class SwerveSubsystem extends SubsystemBase
    */
   public Command getAutonomousCommand(String pathName)
   {
+    AutoBuilder.resetOdom(getPose());
     // Create a path following command using AutoBuilder. This will also trigger event markers.
     return new PathPlannerAuto(pathName);
   }

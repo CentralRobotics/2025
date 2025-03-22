@@ -25,9 +25,9 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
-import frc.robot.commands.ClimbIn;
-import frc.robot.commands.ClimbOut;
+import frc.robot.commands.ExtakeCoral;
 import frc.robot.commands.GoToIntake;
+import frc.robot.commands.IntakeCoral;
 import frc.robot.commands.L1;
 import frc.robot.commands.L2;
 import frc.robot.commands.L3;
@@ -130,6 +130,8 @@ public class RobotContainer
     NamedCommands.registerCommand("L1", new L1(elevator, arm));
     NamedCommands.registerCommand("L2", new L2(elevator, arm));
     NamedCommands.registerCommand("L3", new L3(elevator, arm));
+    NamedCommands.registerCommand("ExtakeCoral", new ExtakeCoral(intake));
+    NamedCommands.registerCommand("IntakeCoral", new IntakeCoral(intake));
     autoChooser.setDefaultOption(autoSimple, autoSimple);
     autoChooser.addOption(autoLeft, autoLeft);
     autoChooser.addOption(autoCenter, autoCenter);
@@ -234,7 +236,6 @@ public class RobotContainer
       operatorXbox.a().whileTrue(new L1(elevator, arm));
       operatorXbox.x().whileTrue(new L2(elevator, arm));
       operatorXbox.y().whileTrue(new L3(elevator, arm));
-      operatorXbox.povRight().onTrue(new ClimbOut(climb)).onFalse(new ClimbIn(climb));
 
     }
 

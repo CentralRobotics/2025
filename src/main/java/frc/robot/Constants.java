@@ -107,8 +107,8 @@ public final class ElevatorConstants{
     public static final double kP = 0.0;
     public static final double kI = 0.0;
     public static final double kD = 0.0;
-    public static final double FORWARD_LIMIT = 0.69;
-    public static final double REVERSE_LIMIT = 0.05;
+    public static final double FORWARD_LIMIT = -5;
+    public static final double REVERSE_LIMIT = -425;
     public static final double INTAKE_SPEED = 0;
     public static final double kCLIMBDefaultTolerance = 0.01;
   }

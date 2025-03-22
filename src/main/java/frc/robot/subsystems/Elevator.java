@@ -83,7 +83,7 @@ public class Elevator extends SubsystemBase {
 
         elevatorMotor_1.setPosition(0);
         elevatorMotor_2.setPosition(0);
-        elevatorMotor_2.setControl(new Follower(ElevatorConstants.LEFT_ELEVATOR_MOTOR_ID, true));
+        elevatorMotor_2.setControl(new Follower(ElevatorConstants.LEFT_ELEVATOR_MOTOR_ID, false));
 
         if (RobotBase.isSimulation()) {
             m_elevatorSim = new ElevatorSim(m_motorSim,
