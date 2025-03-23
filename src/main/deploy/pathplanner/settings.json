@@ -29,6 +29,6 @@
   "bumperOffsetX": 0.0,
   "bumperOffsetY": 0.0,
   "robotFeatures": [
-    "{\"name\":\"Line\",\"type\":\"line\",\"data\":{\"start\":{\"x\":0.15,\"y\":0.0},\"end\":{\"x\":0.2,\"y\":0.0},\"strokeWidth\":0.02}}"
+    "{\"name\":\"Line\",\"type\":\"line\",\"data\":{\"start\":{\"x\":-0.21,\"y\":-0.25},\"end\":{\"x\":-0.21,\"y\":-0.69},\"strokeWidth\":0.03}}"
   ]
 }

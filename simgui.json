@@ -67,11 +67,14 @@
       "/SmartDashboard/JSON": "Alerts",
       "/SmartDashboard/Motors": "Alerts",
       "/SmartDashboard/PathPlanner": "Alerts",
+      "/SmartDashboard/PhotonAlerts": "Alerts",
       "/SmartDashboard/Pigeon 2 (v6) [13]": "Gyro",
       "/SmartDashboard/Pigeon 2 [13]": "Gyro",
       "/SmartDashboard/SendableChooser[0]": "String Chooser",
       "/SmartDashboard/Swerve Drive": "Alerts",
+      "/SmartDashboard/VisionSystemSim-Vision Sim/Sim Field": "Field2d",
       "/SmartDashboard/VisionSystemSim-Vision/Sim Field": "Field2d",
+      "/SmartDashboard/auto": "String Chooser",
       "/SmartDashboard/navX-Sensor[1]": "Gyro",
       "/SmartDashboard/navX-Sensor[4]": "Gyro"
     },
@@ -108,7 +111,6 @@
           "style": "Hidden"
         },
         "bottom": 1638,
-        "builtin": "2025 Reefscape",
         "height": 8.051901817321777,
         "left": 534,
         "right": 3466,
@@ -128,6 +130,12 @@
       "SmartDashboard": {
         "Field": {
           "open": true
+        },
+        "auto": {
+          "open": true,
+          "string[]##v_/SmartDashboard/auto/options": {
+            "open": true
+          }
         },
         "open": true,
         "swerve": {

@@ -17,6 +17,7 @@ public class ExtakeCoral extends Command{
     @Override
     public void initialize()
     {
+        System.out.println("ExtakeCoral");
         intake.set(-1);
         timer.start();
     }

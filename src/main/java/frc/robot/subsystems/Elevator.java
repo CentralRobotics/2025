@@ -43,7 +43,7 @@ public class Elevator extends SubsystemBase {
     private ElevatorSim m_elevatorSim = null;
     private DCMotor m_motorSim = DCMotor.getKrakenX60(2);
     private final TalonFXSimState leftSim = elevatorMotor_1.getSimState();
-    private final TalonFXSimState rightSim = elevatorMotor_1.getSimState();
+    private final TalonFXSimState rightSim = elevatorMotor_2.getSimState();
     // private final CANcoderSimState sensorSim = sensor.getSimState();
 
     public Elevator() {
@@ -106,7 +106,8 @@ public class Elevator extends SubsystemBase {
         rightSim.setSupplyVoltage(RobotController.getBatteryVoltage());
 
         //set input(voltage)
-        m_elevatorSim.setInput(leftSim.getMotorVoltage(), rightSim.getMotorVoltage());
+        // m_elevatorSim.setInput(leftSim.getMotorVoltage(), rightSim.getMotorVoltage());
+        m_elevatorSim.setInput(leftSim.getMotorVoltage());
 
         //update-every 20 milliseconds
         m_elevatorSim.update(0.02);

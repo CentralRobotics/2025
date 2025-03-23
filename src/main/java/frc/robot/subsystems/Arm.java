@@ -58,7 +58,7 @@ public class Arm extends SubsystemBase {
         armMotor.getConfigurator().apply(armConfig);
 
         sensorConfig.MagnetSensor.SensorDirection = SensorDirectionValue.Clockwise_Positive;
-        sensorConfig.MagnetSensor.MagnetOffset = 0.22;
+        sensorConfig.MagnetSensor.MagnetOffset = 0.29;
         sensor.getConfigurator().apply(sensorConfig);
 
         double position = sensor.getAbsolutePosition().getValueAsDouble();

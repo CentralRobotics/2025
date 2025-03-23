@@ -5,6 +5,12 @@
     "data": {
       "commands": [
         {
+          "type": "named",
+          "data": {
+            "name": "test"
+          }
+        },
+        {
           "type": "wait",
           "data": {
             "waitTime": 10.0
@@ -20,6 +26,12 @@
           "type": "named",
           "data": {
             "name": "L2"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ExtakeCoral"
           }
         }
       ]

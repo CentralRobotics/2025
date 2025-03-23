@@ -60,6 +60,7 @@ public class RobotContainer
 
   private final SendableChooser<String> autoChooser = new SendableChooser<>();
   private static final String autoSimple = "Simple";
+  private static final String autoTaxi = "Taxi";
   private static final String autoLeft = "Left_reef_prep_score";
   private static final String autoCenter = "Middle_reef_prep_score";
   private static final String autoRight = "Right_reef_prep_score";
@@ -133,6 +134,7 @@ public class RobotContainer
     NamedCommands.registerCommand("ExtakeCoral", new ExtakeCoral(intake));
     NamedCommands.registerCommand("IntakeCoral", new IntakeCoral(intake));
     autoChooser.setDefaultOption(autoSimple, autoSimple);
+    autoChooser.setDefaultOption(autoTaxi, autoTaxi);
     autoChooser.addOption(autoLeft, autoLeft);
     autoChooser.addOption(autoCenter, autoCenter);
     autoChooser.addOption(autoRight, autoRight);
