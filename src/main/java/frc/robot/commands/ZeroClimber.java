@@ -34,7 +34,7 @@ public class ZeroClimber extends Command {
     @Override
     public boolean isFinished()
     {
-        return climb.getMotor().getStatorCurrent().getValueAsDouble() > 5;
+        return climb.getMotor().getStatorCurrent().getValueAsDouble() > 6.9;
     }
 
     @Override

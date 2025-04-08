@@ -17,15 +17,27 @@
           }
         },
         {
-          "type": "wait",
+          "type": "named",
           "data": {
-            "waitTime": 2.0
+            "name": "ExtakeCoral"
           }
         },
         {
           "type": "path",
           "data": {
             "pathName": "Intake1"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "GoToIntake"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "IntakeCoral"
           }
         },
         {
@@ -41,9 +53,27 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "ExtakeCoral"
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "Intake2"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "GoToIntake"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "IntakeCoral"
           }
         },
         {
@@ -56,6 +86,12 @@
           "type": "named",
           "data": {
             "name": "L2"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ExtakeCoral"
           }
         }
       ]

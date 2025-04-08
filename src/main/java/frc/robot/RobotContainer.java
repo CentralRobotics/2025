@@ -20,6 +20,7 @@ import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
@@ -61,6 +62,7 @@ public class RobotContainer
   private final SendableChooser<String> autoChooser = new SendableChooser<>();
   private static final String autoSimple = "Simple";
   private static final String autoTaxi = "Taxi";
+  private static final String autoLTaxi = "Long Taxi";
   private static final String autoLeft = "Left_reef_prep_score";
   private static final String autoCenter = "Middle_reef_prep_score";
   private static final String autoRight = "Right_reef_prep_score";
@@ -131,10 +133,12 @@ public class RobotContainer
     NamedCommands.registerCommand("L1", new L1(elevator, arm));
     NamedCommands.registerCommand("L2", new L2(elevator, arm));
     NamedCommands.registerCommand("L3", new L3(elevator, arm));
+    NamedCommands.registerCommand("GoToIntake", new GoToIntake(elevator,arm));
     NamedCommands.registerCommand("ExtakeCoral", new ExtakeCoral(intake));
     NamedCommands.registerCommand("IntakeCoral", new IntakeCoral(intake));
     autoChooser.setDefaultOption(autoSimple, autoSimple);
-    autoChooser.setDefaultOption(autoTaxi, autoTaxi);
+    autoChooser.addOption(autoTaxi, autoTaxi);
+    autoChooser.addOption(autoLTaxi, autoLTaxi);
     autoChooser.addOption(autoLeft, autoLeft);
     autoChooser.addOption(autoCenter, autoCenter);
     autoChooser.addOption(autoRight, autoRight);
@@ -238,7 +242,7 @@ public class RobotContainer
       operatorXbox.a().whileTrue(new L1(elevator, arm));
       operatorXbox.x().whileTrue(new L2(elevator, arm));
       operatorXbox.y().whileTrue(new L3(elevator, arm));
-
+      // operatorXbox.start().onTrue( CommandScheduler.getInstance().cancelAll());
     }
 
   }

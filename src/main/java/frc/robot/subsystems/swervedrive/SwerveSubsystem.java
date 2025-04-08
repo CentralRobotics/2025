@@ -109,7 +109,7 @@ public class SwerveSubsystem extends SubsystemBase
     poseEstimator.addCameras(centerCamera);
 
     setupPathPlanner();
-    RobotModeTriggers.autonomous().onTrue(Commands.runOnce(this::zeroGyroWithAlliance));
+    //RobotModeTriggers.autonomous().onTrue(Commands.runOnce(this::zeroGyroWithAlliance));
   }
 
   @Override
