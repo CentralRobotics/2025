@@ -133,6 +133,11 @@ public class Robot extends TimedRobot
     {
       CommandScheduler.getInstance().cancelAll();
     }
+    
+
+
+    m_robotContainer.zeroGyroWithAlliance();
+
   }
 
   /**
