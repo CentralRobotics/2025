@@ -26,17 +26,6 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
-import frc.robot.commands.ExtakeCoral;
-import frc.robot.commands.GoToIntake;
-import frc.robot.commands.IntakeCoral;
-import frc.robot.commands.L1;
-import frc.robot.commands.L2;
-import frc.robot.commands.L3;
-import frc.robot.commands.ZeroClimber;
-import frc.robot.subsystems.Arm;
-import frc.robot.subsystems.Climb;
-import frc.robot.subsystems.Elevator;
-import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import swervelib.SwerveInputStream;
 
@@ -53,11 +42,6 @@ public class RobotContainer
   final         CommandXboxController operatorXbox = new CommandXboxController(1);
   // The robot's subsystems and commands are defined here...
   private final SwerveSubsystem       drivebase  = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(), "swerve/falcon"));
-  private final Elevator              elevator   = new Elevator();
-  private final Arm                   arm        = new Arm();
-  private final Intake                intake     = new Intake();
-  private final Climb                 climb      = new Climb();
-  // private final Led                   led        = new Led();
 
   private final SendableChooser<String> autoChooser = new SendableChooser<>();
   private static final String autoSimple = "Simple";
@@ -129,13 +113,7 @@ public class RobotContainer
     // Configure the trigger bindings
     configureBindings();
     DriverStation.silenceJoystickConnectionWarning(true);
-    NamedCommands.registerCommand("test", Commands.print("I EXIST"));
-    NamedCommands.registerCommand("L1", new L1(elevator, arm));
-    NamedCommands.registerCommand("L2", new L2(elevator, arm));
-    NamedCommands.registerCommand("L3", new L3(elevator, arm));
-    NamedCommands.registerCommand("GoToIntake", new GoToIntake(elevator,arm));
-    NamedCommands.registerCommand("ExtakeCoral", new ExtakeCoral(intake));
-    NamedCommands.registerCommand("IntakeCoral", new IntakeCoral(intake));
+  
     autoChooser.setDefaultOption(autoSimple, autoSimple);
     autoChooser.addOption(autoTaxi, autoTaxi);
     autoChooser.addOption(autoLTaxi, autoLTaxi);
@@ -144,7 +122,6 @@ public class RobotContainer
     autoChooser.addOption(autoRight, autoRight);
     autoChooser.addOption(threePiece, threePiece);
     SmartDashboard.putData("auto", autoChooser);
-    RobotModeTriggers.teleop().onTrue(new ZeroClimber(climb));
   }
 
   /**
@@ -219,7 +196,6 @@ public class RobotContainer
       // driverXbox.y().whileTrue(drivebase.sysIdAngleMotorCommand());
       // driverXbox.b().whileTrue(elevator.setElevatorHeight(0));
       // driverXbox.b().whileFalse(elevator.setElevator(driverXbox));
-      operatorXbox.y().whileTrue(elevator.setElevatorHeight(0).alongWith(arm.moveToAngle(0.482)));
       // driverXbox.b().whileFalse(arm.setArmAngle(driverXbox));
       // driverXbox.b().whileTrue(arm.moveToAngle(0.5));
       // driverXbox.y().onTrue(arm.moveToAngle(0));
@@ -232,17 +208,6 @@ public class RobotContainer
      // driverXbox.b().onTrue(new driveToPose());
       // driverXbox.rightBumper().onTrue(Commands.none());
       // driverXbox.b().onTrue(new AbsoluteDrive(drivebase, null, null, null, null));
-      climb.setDefaultCommand(climb.manualClimb(driverXbox));
-      elevator.setDefaultCommand(elevator.manualElevator(operatorXbox));
-      arm.setDefaultCommand(arm.manualArm(operatorXbox));
-      intake.setDefaultCommand(intake.manualIntake(operatorXbox));
-      // operatorXbox.b().onTrue(new GoToIntake(elevator, arm).andThen(new IntakeCoral(intake)));
-      // operatorXbox.povDown().onTrue(new RelitiveDrive(drivebase));
-      operatorXbox.b().whileTrue(new GoToIntake(elevator, arm));
-      operatorXbox.a().whileTrue(new L1(elevator, arm));
-      operatorXbox.x().whileTrue(new L2(elevator, arm));
-      operatorXbox.y().whileTrue(new L3(elevator, arm));
-      // operatorXbox.start().onTrue( CommandScheduler.getInstance().cancelAll());
     }
 
   }

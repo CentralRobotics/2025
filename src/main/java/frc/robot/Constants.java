@@ -40,21 +40,14 @@ public final class Constants
 //  }
 
 public final class ElevatorConstants{
-  public static final int LEFT_ELEVATOR_MOTOR_ID = 11;
-  public static final int RIGHT_ELEVATOR_MOTOR_ID = 12;
-  public static final int ELEVATOR_CANCODER_ID = 2;
+  
   public static final double kG = 0.01;
   public static final double kV = 0.0;
   public static final double kA = 0.0;
   public static final double kP = 0.5;
   public static final double kI = 0.0;
   public static final double kD = 0.0;
-  public static final double kElevatorGearing = 21.7777777777;
-  public static final double kElevatorDrumRadius = Units.inchesToMeters(1.79); // meters
-  public static final double kElevatorCarriageMass = Units.lbsToKilograms(16); // kg
-  public static final double kElevatorMinHeightMeters = 0.0; // meters
-  public static final double kElevatorMaxHeightMeters = Units.inchesToMeters(69); // meters
-  public static final double kElevatorDefaultTolerance = Inches.of(1).in(Meters);
+
 }
 
   public static final class DrivebaseConstants
@@ -74,49 +67,6 @@ public final class ElevatorConstants{
     public static final double TURN_CONSTANT    = 6;
   }
 
-  public static final class ArmConstants
-  {
-    public static final int ARM_MOTOR_ID = 21;
-    public static final double ARM_GEAR_RATIO = 1;
-    public static final double ARM_LENGTH_METERS = Units.inchesToMeters(0);
-    public static final double ARM_MAX_ANGLE = 180.0; // degrees
-    public static final double ARM_MIN_ANGLE = 0.0; // degrees
-    public static final double kG = 0.01;
-    public static final double kV = 0.0;
-    public static final double kA = 0.0;
-    public static final double kP = 13.0;
-    public static final double kI = 0.0;
-    public static final double kD = 0.0;
-    public static final double FORWARD_LIMIT = 0.6;
-    public static final double REVERSE_LIMIT = -0.14;
-    public static final int ARM_CANCODER_ID = 1;
-    public static final double INTAKE_SPEED = 0;
-    public static final double kArmDefaultTolerance = 0.01;
-  }
 
-  public static final class ClimbConstants
-  {
-    public static final int CLIMB_MOTOR_ID = 31;
-    public static final double CLIMB_GEAR_RATIO = 1;
-    public static final double CLIMB_LENGTH_METERS = Units.inchesToMeters(0);
-    public static final double CLIMB_MAX_ANGLE = 180.0; // degrees
-    public static final double CLIMB_MIN_ANGLE = 0.0; // degrees
-    public static final double kG = 0.01;
-    public static final double kV = 0.0;
-    public static final double kA = 0.0;
-    public static final double kP = 0.0;
-    public static final double kI = 0.0;
-    public static final double kD = 0.0;
-    public static final double FORWARD_LIMIT = -5;
-    public static final double REVERSE_LIMIT = -425;
-    public static final double INTAKE_SPEED = 0;
-    public static final double kCLIMBDefaultTolerance = 0.01;
-  }
-
-  public static final class IntakeConstants
-  {
-    public static final int INTAKE_MOTOR_ID = 21;
-    public static final double INTAKE_SPEED = 0.5;
-    public static final double INTAKE_REVERSE_SPEED = -0.5;
-  }
+ 
 }
