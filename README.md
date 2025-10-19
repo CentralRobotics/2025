@@ -30,7 +30,7 @@ robot/
 ├── Main.java
 └── RobotContainer.java
 ```
-to-do: better documentation of structure (oops)
+to-do: better documentation of structure 
 
 
 ## Acknowledgement
