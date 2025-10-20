@@ -67,4 +67,8 @@ public final class Constants
     public static final double STALL_CURRENT_A = 45.0;
     public static final double STALL_TIME_S    = 0.20;
   }
+
+  public static class ElevatorConstants{
+
+  }
 }
