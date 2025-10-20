@@ -33,6 +33,12 @@
           "data": {
             "pathName": "GoToReef2"
           }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "HomePosition"
+          }
         }
       ]
     }

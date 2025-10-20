@@ -48,4 +48,24 @@ public final class Constants
     public static final double RIGHT_X_DEADBAND = 0.1;
     public static final double TURN_CONSTANT    = 6;
   }
+
+
+  public static class ClimberConstants { 
+    public static final int MOTOR_ID = 31;               // <— set your CAN id
+    public static final boolean MOTOR_INVERTED = false;  // set if needed
+  
+    public static final int SERVO_PWM = 0;               // <— set your PWM port
+    // Servo angles (deg) — tune these to your linkage
+    public static final double RATCHET_ENGAGED_DEG   = 30;   // pawl in ratchet
+    public static final double RATCHET_DISENGAGED_DEG = 120; // pawl lifted out
+  
+    public static final int CLIMB_CURRENT_LIMIT_A = 40;
+    public static final double CLIMB_UP_PCT   = 0.90;   // pull rope / raise robot
+    public static final double LOWER_DOWN_PCT = -0.30;  // let rope out
+    public static final double MAX_OUTPUT = 1.0;
+  
+    // “Stall” detect to know we’re latched on a bar, etc.
+    public static final double STALL_CURRENT_A = 45.0;
+    public static final double STALL_TIME_S    = 0.20;
+  }
 }
