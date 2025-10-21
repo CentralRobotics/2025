@@ -26,8 +26,8 @@ public class ElevatorSubsystem extends SubsystemBase {
     private final Timer stallTimer = new Timer();
 
     public ElevatorSubsystem(){
-        motorL.setInverted(ElevatorConstants.MOTOR_INVERTED);
-        motorR.setInverted(ElevatorConstants.MOTOR_INVERTED);
+        motorL.setInverted(ElevatorConstants.LMOTOR_INVERTED);
+        motorR.setInverted(ElevatorConstants.RMOTOR_INVERTED);
 
         kElevatorRelativeEncoderLeft.setPosition(0.0);
         kElevatorRelativeEncoderRight.setPosition(0.0);
