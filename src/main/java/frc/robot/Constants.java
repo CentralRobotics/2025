@@ -70,7 +70,7 @@ public final class Constants
 
   public static class ElevatorConstants{
     public static final int LMotorCANId = 14; 
-    public static final int RMotorCANId = 14; 
+    public static final int RMotorCANId = 15; 
     public static final boolean MOTOR_INVERTED = false;  
   }
 }
