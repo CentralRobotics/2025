@@ -1,6 +1,6 @@
 
 # 2026 base robot 
-Bionic Broncos 2025 (offseason) - 2026 Base robot logic. 
+Bionic Broncos 2025 (offseason) - 2026 robot logic. 
 Based off YAGSL-Example
 
 
@@ -14,7 +14,7 @@ Based off YAGSL-Example
 robot/
 ├── commands/
 │   ├── climber/
-│   │   └── ManualClimber
+│   │   └── 
 │   └── swervedrive/
 │       ├── AbsoluteDrive.
 │       ├── AbsoluteDriveAdv.java
@@ -30,7 +30,7 @@ robot/
 ├── Main.java
 └── RobotContainer.java
 ```
-to-do: better documentation of structure 
+we're working on better documentation for future broncos!
 
 
 ## Acknowledgement
