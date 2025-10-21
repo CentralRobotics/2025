@@ -14,8 +14,8 @@ import edu.wpi.first.wpilibj.Timer;
 import frc.robot.Constants.ElevatorConstants;
 
 public class ElevatorSubsystem extends SubsystemBase {
-    SparkMax motorL = new SparkMax( /* id */, MotorType.kBrushless);
-    SparkMax motorR = new SparkMax( /* id */, MotorType.kBrushless);
+    SparkMax motorL = new SparkMax(ElevatorConstants.LMotorCANId, MotorType.kBrushless);
+    SparkMax motorR = new SparkMax(ElevatorConstants.RMotorCANId, MotorType.kBrushless);
 
     private final RelativeEncoder kElevatorRelativeEncoderLeft = motorL.getEncoder();
     private final RelativeEncoder kElevatorRelativeEncoderRight = motorR.getEncoder();
