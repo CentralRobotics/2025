@@ -71,8 +71,17 @@ public final class Constants
   public static class ElevatorConstants{
     public static final int LMotorCANId = 14; 
     public static final int RMotorCANId = 15; 
-    public static final boolean LMOTOR_INVERTED = false;  
-    public static final boolean RMOTOR_INVERTED = false;  
+    public static final boolean LMOTOR_INVERTED = false;
+    public static final boolean RMOTOR_INVERTED = true;
 
+    public static final int THROUGHBORE_CHANNEL_A = 0;
+    public static final int THROUGHBORE_CHANNEL_B = 1;
+
+    public static final double MAX_HEIGHT_TICKS = 5000;  // tune experimentally
+    public static final double MIN_HEIGHT_TICKS = 0;
+
+    public static final double SLOW_ZONE = 500; // ticks before top/bottom to start slowing
+    public static final double MAX_SPEED = 1.0;
+    public static final double MIN_SPEED = 0.15; // crawl speed near limits
   }
 }

@@ -1,42 +1,71 @@
 package frc.robot.subsystems.elevator;
 
-import com.revrobotics.RelativeEncoder;
-import com.revrobotics.spark.SparkBase;
-import com.revrobotics.RelativeEncoder;
-import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
-
-import com.revrobotics.spark.config.SparkBaseConfig;
-import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
-
+import com.revrobotics.spark.SparkMax;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.wpilibj.Timer;
 import frc.robot.Constants.ElevatorConstants;
 
 public class ElevatorSubsystem extends SubsystemBase {
-    SparkMax motorL = new SparkMax(ElevatorConstants.LMotorCANId, MotorType.kBrushless);
-    SparkMax motorR = new SparkMax(ElevatorConstants.RMotorCANId, MotorType.kBrushless);
 
-    private final RelativeEncoder kElevatorRelativeEncoderLeft = motorL.getEncoder();
-    private final RelativeEncoder kElevatorRelativeEncoderRight = motorR.getEncoder();
+    private final SparkMax motorL =
+        new SparkMax(ElevatorConstants.LMotorCANId, MotorType.kBrushless);
+    private final SparkMax motorR =
+        new SparkMax(ElevatorConstants.RMotorCANId, MotorType.kBrushless);
 
+    private final Encoder throughboreEncoder =
+        new Encoder(ElevatorConstants.THROUGHBORE_CHANNEL_A, ElevatorConstants.THROUGHBORE_CHANNEL_B);
 
-
-    //stall detection
-    private final Timer stallTimer = new Timer();
-
-    @SuppressWarnings("deprecation")
-    public ElevatorSubsystem(){
+    public ElevatorSubsystem() {
         motorL.setInverted(ElevatorConstants.LMOTOR_INVERTED);
         motorR.setInverted(ElevatorConstants.RMOTOR_INVERTED);
-        // we will eventually migrate to 2025's workflow  
 
-        kElevatorRelativeEncoderLeft.setPosition(0.0);
-        kElevatorRelativeEncoderRight.setPosition(0.0);
-
-        stallTimer.stop();
-        stallTimer.reset();
-
+        throughboreEncoder.reset();
+        throughboreEncoder.setDistancePerPulse(1.0); // set scale in ticks
     }
-    
+
+    public void moveElevator(double speed) {
+        double position = throughboreEncoder.get();
+        double adjustedSpeed = applySoftLimits(speed, position);
+        motorL.set(adjustedSpeed);
+        motorR.set(adjustedSpeed);
+    }
+
+    public void stop() {
+        motorL.stopMotor();
+        motorR.stopMotor();
+    }
+
+// magic motion?!?!?!?!?!?!?
+    private double applySoftLimits(double speed, double position) {
+        double top = ElevatorConstants.MAX_HEIGHT_TICKS;
+        double bottom = ElevatorConstants.MIN_HEIGHT_TICKS;
+        double zone = ElevatorConstants.SLOW_ZONE;
+        double min = ElevatorConstants.MIN_SPEED;
+
+        if (speed > 0 && position >= top - zone) {
+            double ratio = (top - position) / zone;
+            return Math.max(min, speed * ratio);
+        } else if (speed < 0 && position <= bottom + zone) {
+            double ratio = (position - bottom) / zone;
+            return Math.min(-min, speed * ratio);
+        }
+        return speed;
+    }
+
+    public double getPosition() {
+        return throughboreEncoder.get();
+    }
+
+    public boolean atTop() {
+        return throughboreEncoder.get() >= ElevatorConstants.MAX_HEIGHT_TICKS;
+    }
+
+    public boolean atBottom() {
+        return throughboreEncoder.get() <= ElevatorConstants.MIN_HEIGHT_TICKS;
+    }
+
+    public void resetEncoder() {
+        throughboreEncoder.reset();
+    }
 }
