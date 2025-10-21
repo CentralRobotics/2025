@@ -23,7 +23,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.OperatorConstants;
-import frc.robot.commands.elevator.ElevatorUp;
+import frc.robot.commands.elevator.*;
 import frc.robot.subsystems.elevator.ElevatorSubsystem;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import java.io.File;
@@ -130,8 +130,8 @@ public class RobotContainer {
     Command driveFieldOrientedAnglularVelocityKeyboard = drivebase.driveFieldOriented(driveAngularVelocityKeyboard);
     Command driveSetpointGenKeyboard = drivebase.driveWithSetpointGeneratorFieldRelative(driveDirectAngleKeyboard);
 
-
-    new JoystickButton(xboxController, XboxController.Button.kA.value).onTrue(new ElevatorUp(elevatorbase));
+    // where to put this
+   //  new JoystickButton(xboxController, XboxController.Button.kA.value).onTrue(new ElevatorUp(elevatorbase));
 
     if (RobotBase.isSimulation()) {
       drivebase.setDefaultCommand(driveFieldOrientedDirectAngleKeyboard);
@@ -163,14 +163,13 @@ public class RobotContainer {
       // new Pose2d(new Translation2d(4, 4), Rotation2d.fromDegrees(0))));
     }
 
-    //idk where to put this
-    xboxController.a().onTrue(new ElevatorUp(elevatorbase));
 
     if (DriverStation.isTest()) {
       drivebase.setDefaultCommand(driveFieldOrientedAnglularVelocity); // Overrides drive command above!
 
       driverXbox.x().whileTrue(Commands.runOnce(drivebase::lock, drivebase).repeatedly());
-      driverXbox.y().whileTrue(drivebase.driveToDistanceCommand(1.0, 0.2));
+      driverXbox.y().onTrue(new ElevatorUp(elevatorbase));
+      driverXbox.b().onTrue(new ElevatorReturnHome(elevatorbase));
       driverXbox.start().onTrue((Commands.runOnce(drivebase::zeroGyro)));
       driverXbox.back().whileTrue(drivebase.centerModulesCommand());
       driverXbox.leftBumper().onTrue(Commands.none());
