@@ -1,5 +1,5 @@
 name: "🐛 Bug Report"
-description: "File a bug report for YAGSL"
+description: "File a bug report"
 title: "[BUG] <short description>"
 labels: [bug]
 assignees: []
@@ -8,7 +8,7 @@ body:
   - type: markdown
     attributes:
       value: |
-        Thank you for helping improve YAGSL! Please complete the following form with as much detail as possible.
+        Thank you for helping improve our robot! 
 
   - type: input
     id: version
