@@ -13,6 +13,9 @@ Based off YAGSL-Example
 ```
 robot/
 ├── commands/
+│   ├── elevator/
+│   │   └── ElevatorUp.Java
+│   │   └── ElevatorDown.Java
 │   ├── climber/
 │   │   └── 
 │   └── swervedrive/
@@ -20,6 +23,8 @@ robot/
 │       ├── AbsoluteDriveAdv.java
 │       └── AbsoluteDriveField.java
 ├── subsystems/
+│   ├── elevator/
+│   │   └── ElevatorSubsystem.java
 │   ├── climber/
 │   │   └── ClimberSubsystem.java
 │   └── swervedrive/
