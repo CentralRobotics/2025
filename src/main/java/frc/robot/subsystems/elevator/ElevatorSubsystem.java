@@ -25,9 +25,11 @@ public class ElevatorSubsystem extends SubsystemBase {
     //stall detection
     private final Timer stallTimer = new Timer();
 
+    @SuppressWarnings("deprecation")
     public ElevatorSubsystem(){
         motorL.setInverted(ElevatorConstants.LMOTOR_INVERTED);
         motorR.setInverted(ElevatorConstants.RMOTOR_INVERTED);
+        // we will eventually migrate to 2025's workflow  
 
         kElevatorRelativeEncoderLeft.setPosition(0.0);
         kElevatorRelativeEncoderRight.setPosition(0.0);
