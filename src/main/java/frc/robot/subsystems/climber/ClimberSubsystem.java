@@ -79,7 +79,7 @@ public class ClimberSubsystem extends SubsystemBase {
     if (ratchetEngaged) disengageRatchet();
     setPercent(ClimberConstants.LOWER_DOWN_PCT);
   }
-
+ 
   public void stop() {
     targetPercent = 0.0;
     motor.set(0.0);

@@ -69,6 +69,6 @@ public final class Constants
   }
 
   public static class ElevatorConstants{
-
+    public static final boolean MOTOR_INVERTED = false;  
   }
 }
