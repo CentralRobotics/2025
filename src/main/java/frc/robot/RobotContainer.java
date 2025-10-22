@@ -197,12 +197,12 @@ public class RobotContainer {
 
 
       // ELEVATOR :0
-      if(hauteJoystick.getRawButtonPressed(1)){
-        elevatorMoveToUpPosition;
-      }
-      if(hauteJoystick.getRawButtonPressed(2)){
-        elevatorReturnToHomePosition;
-      }
+      // if(hauteJoystick.getRawButtonPressed(1)){
+      //   elevatorMoveToUpPosition;
+      // }
+      // if(hauteJoystick.getRawButtonPressed(2)){
+      //   elevatorReturnToHomePosition;
+      // }
       driverXbox.y().onTrue(elevatorMoveToUpPosition);
       driverXbox.b().onTrue(elevatorReturnToHomePosition);
 
