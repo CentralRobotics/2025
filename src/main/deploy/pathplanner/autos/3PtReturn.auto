@@ -7,37 +7,43 @@
         {
           "type": "path",
           "data": {
-            "pathName": "GoToReef"
+            "pathName": "Step1"
           }
         },
         {
           "type": "wait",
           "data": {
-            "waitTime": 1.5
+            "waitTime": 1.0
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Intake1"
+            "pathName": "Step2"
           }
         },
         {
           "type": "wait",
           "data": {
-            "waitTime": 1.5
+            "waitTime": 2.0
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "GoToReef2"
+            "pathName": "Step3"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.0
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "HomePosition"
+            "pathName": "Step4"
           }
         }
       ]

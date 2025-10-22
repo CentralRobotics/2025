@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -105,7 +106,11 @@ public class RobotContainer {
     configureBindings();
     DriverStation.silenceJoystickConnectionWarning(true);
     NamedCommands.registerCommand("test", Commands.print("I EXIST"));
+    NamedCommands.registerCommand("ElevatorUp", new ElevatorUp(elevatorbase));
     autoChooser.addOption(auto3PtReturn, auto3PtReturn);
+    autoChooser.setDefaultOption(auto3PtReturn, auto3PtReturn);
+    SmartDashboard.putData("auto", autoChooser);
+
   }
 
   /**
@@ -123,6 +128,7 @@ public class RobotContainer {
    */
   @SuppressWarnings("unused")
   private void configureBindings() {
+
     Command driveFieldOrientedDirectAngle = drivebase.driveFieldOriented(driveDirectAngle);
     Command driveFieldOrientedAnglularVelocity = drivebase.driveFieldOriented(driveAngularVelocity);
     Command driveRobotOrientedAngularVelocity = drivebase.driveFieldOriented(driveRobotOriented);
@@ -132,6 +138,10 @@ public class RobotContainer {
     Command driveSetpointGenKeyboard = drivebase.driveWithSetpointGeneratorFieldRelative(driveDirectAngleKeyboard);
     Command elevatorMoveToUpPosition = new ElevatorUp(elevatorbase);
     Command elevatorReturnToHomePosition = new ElevatorReturnHome(elevatorbase);
+
+
+
+
     // where to put this
    //  new JoystickButton(xboxController, XboxController.Button.kA.value).onTrue(new ElevatorUp(elevatorbase));
 
