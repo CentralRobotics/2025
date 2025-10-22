@@ -17,8 +17,8 @@ public class ElevatorSubsystem extends SubsystemBase {
         new Encoder(ElevatorConstants.THROUGHBORE_CHANNEL_A, ElevatorConstants.THROUGHBORE_CHANNEL_B);
 
     public ElevatorSubsystem() {
-        motorL.setInverted(ElevatorConstants.LMOTOR_INVERTED);
-        motorR.setInverted(ElevatorConstants.RMOTOR_INVERTED);
+        /*motorL.setInverted(ElevatorConstants.LMOTOR_INVERTED);
+        motorR.setInverted(ElevatorConstants.RMOTOR_INVERTED);*/
 
         throughboreEncoder.reset();
         throughboreEncoder.setDistancePerPulse(1.0); // set scale in ticks
