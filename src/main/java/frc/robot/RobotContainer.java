@@ -130,7 +130,8 @@ public class RobotContainer {
     Command driveFieldOrientedDirectAngleKeyboard = drivebase.driveFieldOriented(driveDirectAngleKeyboard);
     Command driveFieldOrientedAnglularVelocityKeyboard = drivebase.driveFieldOriented(driveAngularVelocityKeyboard);
     Command driveSetpointGenKeyboard = drivebase.driveWithSetpointGeneratorFieldRelative(driveDirectAngleKeyboard);
-      
+    Command elevatorMoveToUpPosition = new ElevatorUp(elevatorbase);
+    Command elevatorReturnToHomePosition = new ElevatorReturnHome(elevatorbase);
     // where to put this
    //  new JoystickButton(xboxController, XboxController.Button.kA.value).onTrue(new ElevatorUp(elevatorbase));
 
@@ -186,10 +187,10 @@ public class RobotContainer {
 
 
       // ELEVATOR :0
-      driverXbox.y().onTrue(new ElevatorUp(elevatorbase));
-      driverXbox.b().onTrue(new ElevatorReturnHome(elevatorbase));
+      driverXbox.y().onTrue(elevatorMoveToUpPosition);
+      driverXbox.b().onTrue(elevatorReturnToHomePosition);
 
-      
+
 
       /*
        * 
