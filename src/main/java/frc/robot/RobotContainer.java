@@ -169,8 +169,6 @@ public class RobotContainer {
       drivebase.setDefaultCommand(driveFieldOrientedAnglularVelocity); // Overrides drive command above!
 
       driverXbox.x().whileTrue(Commands.runOnce(drivebase::lock, drivebase).repeatedly());
-      driverXbox.y().onTrue(new ElevatorUp(elevatorbase));
-      driverXbox.b().onTrue(new ElevatorReturnHome(elevatorbase));
       driverXbox.start().onTrue((Commands.runOnce(drivebase::zeroGyro)));
       driverXbox.back().whileTrue(drivebase.centerModulesCommand());
       driverXbox.leftBumper().onTrue(Commands.none());
@@ -183,6 +181,11 @@ public class RobotContainer {
       driverXbox.start().whileTrue(Commands.none());
       driverXbox.back().whileTrue(Commands.none());
       driverXbox.leftBumper().whileTrue(Commands.runOnce(drivebase::lock, drivebase).repeatedly());
+
+      driverXbox.y().onTrue(new ElevatorUp(elevatorbase));
+      driverXbox.b().onTrue(new ElevatorReturnHome(elevatorbase));
+
+      
 
       // Hold RB to command all module angles to 0° (desired = 0, speed = 0)
       driverXbox.rightBumper().whileTrue(drivebase.centerModulesCommand());
