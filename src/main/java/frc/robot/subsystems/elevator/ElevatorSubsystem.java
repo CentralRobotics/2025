@@ -17,6 +17,7 @@ public class ElevatorSubsystem extends SubsystemBase {
     private Encoder throughboreEncoder = null;
     private final RelativeEncoder internalEncoderL = motorL.getEncoder();
     private final RelativeEncoder internalEncoderR = motorR.getEncoder();
+    
 
     private final boolean useThroughbore;
 
@@ -31,7 +32,7 @@ public class ElevatorSubsystem extends SubsystemBase {
                 ElevatorConstants.THROUGHBORE_CHANNEL_B
             );
             throughboreEncoder.reset();
-            throughboreEncoder.setDistancePerPulse(1.0); //  ticks if scaled
+            throughboreEncoder.setDistancePerPulse(ElevatorConstants.THROUGHBORE_DISTANCE_PER_PULSE); //  ticks if scaled
             System.out.println("[Bionic|Elevator] Using Throughbore Encoder (ticks)");
         } else {
             internalEncoderL.setPosition(0);

@@ -85,11 +85,13 @@ public final class Constants {
     public static final double MIN_HEIGHT_TICKS = 0;
     public static final double SLOW_ZONE_TICKS = 250;
     public static final double SLOW_ZONE = 500; // ticks before top/bottom to start slowing
-    public static final double MAX_SPEED = 1.0;
-    public static final double MIN_SPEED = 0.15; // crawl speed near limits
+
+    // Motion config 
+    public static final double MAX_SPEED = 1.0; // 1.0 may be too fast with two
+    public static final double MIN_SPEED = 0.05; // crawl speed near limits
 
     // Internal relative encoder fallback
-    public static final double ROTATIONS_TO_TOP = 85.0; // 🔧 Calibrate this experimentally
+    public static final double ROTATIONS_TO_TOP = 85.0; // calibrate experimentally
     public static final double SLOW_ZONE_ROTATIONS = 5.0;
   }
 }
