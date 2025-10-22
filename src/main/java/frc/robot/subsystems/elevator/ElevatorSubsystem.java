@@ -82,7 +82,9 @@ public class ElevatorSubsystem extends SubsystemBase {
         if (useThroughbore && throughboreEncoder != null) {
             return throughboreEncoder.get();
         } else {
-            return (internalEncoderL.getPosition() + internalEncoderR.getPosition()) / 2.0;
+            // Average both motors and apply gear ratio correction
+            double avgMotorRotations = (internalEncoderL.getPosition() + internalEncoderR.getPosition()) / 2.0;
+            return avgMotorRotations / ElevatorConstants.GEAR_RATIO; // converts to drum rotations
         }
     }
 

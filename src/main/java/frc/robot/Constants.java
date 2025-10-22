@@ -75,6 +75,7 @@ public final class Constants {
     public static final int RMotorCANId = 16;
     public static final boolean LMOTOR_INVERTED = false;
     public static final boolean RMOTOR_INVERTED = true;
+    public static final double GEAR_RATIO = 3.0; 
 
     public static final Integer THROUGHBORE_CHANNEL_A = null;
     public static final Integer THROUGHBORE_CHANNEL_B = null;
