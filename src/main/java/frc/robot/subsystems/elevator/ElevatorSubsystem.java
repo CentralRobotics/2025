@@ -31,7 +31,7 @@ public class ElevatorSubsystem extends SubsystemBase {
                 ElevatorConstants.THROUGHBORE_CHANNEL_B
             );
             throughboreEncoder.reset();
-            throughboreEncoder.setDistancePerPulse(1.0); // throughbore ticks, if scaled
+            throughboreEncoder.setDistancePerPulse(1.0); //  ticks if scaled
             System.out.println("[Bionic|Elevator] Using Throughbore Encoder (ticks)");
         } else {
             internalEncoderL.setPosition(0);

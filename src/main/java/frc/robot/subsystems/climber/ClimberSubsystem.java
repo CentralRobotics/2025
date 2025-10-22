@@ -19,7 +19,7 @@ public class ClimberSubsystem extends SubsystemBase {
 
  
 
-  SparkMax motor = new SparkMax(1, MotorType.kBrushless);
+  SparkMax motor = new SparkMax(ClimberConstants.MOTOR_ID, MotorType.kBrushless);
   
 
  private final RelativeEncoder kClimbRelativeEncoder = motor.getEncoder();
