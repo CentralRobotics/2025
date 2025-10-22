@@ -2,16 +2,17 @@ package frc.robot.subsystems.elevator;
 
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkMax;
+import com.revrobotics.spark.SparkFlex;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ElevatorConstants;
 
 public class ElevatorSubsystem extends SubsystemBase {
 
-    private final SparkMax motorL =
-        new SparkMax(ElevatorConstants.LMotorCANId, MotorType.kBrushless);
-    private final SparkMax motorR =
-        new SparkMax(ElevatorConstants.RMotorCANId, MotorType.kBrushless);
+    private final SparkFlex motorL =
+        new SparkFlex(ElevatorConstants.LMotorCANId, MotorType.kBrushless);
+    private final SparkFlex motorR =
+        new SparkFlex(ElevatorConstants.RMotorCANId, MotorType.kBrushless);
 
     private final Encoder throughboreEncoder =
         new Encoder(ElevatorConstants.THROUGHBORE_CHANNEL_A, ElevatorConstants.THROUGHBORE_CHANNEL_B);
