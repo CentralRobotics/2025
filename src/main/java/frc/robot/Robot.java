@@ -52,6 +52,7 @@ public class Robot extends TimedRobot
     if (isSimulation())
     {
       DriverStation.silenceJoystickConnectionWarning(true);
+      System.out.println("[Bionic|Warning] Simulation enabled");
     }
   }
 

@@ -176,12 +176,16 @@ public class RobotContainer {
       // Hold RB to command all module angles to 0° (desired = 0, speed = 0)
       driverXbox.rightBumper().whileTrue(drivebase.centerModulesCommand());
     } else {
+
+      // EVERY OTHER MODE
       driverXbox.a().onTrue((Commands.runOnce(drivebase::zeroGyro)));
       driverXbox.x().onTrue(Commands.runOnce(drivebase::addFakeVisionReading));
       driverXbox.start().whileTrue(Commands.none());
       driverXbox.back().whileTrue(Commands.none());
       driverXbox.leftBumper().whileTrue(Commands.runOnce(drivebase::lock, drivebase).repeatedly());
 
+
+      // ELEVATOR :0
       driverXbox.y().onTrue(new ElevatorUp(elevatorbase));
       driverXbox.b().onTrue(new ElevatorReturnHome(elevatorbase));
 

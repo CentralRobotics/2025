@@ -14,12 +14,12 @@ public class ElevatorUp extends Command {
 
     @Override
     public void execute() {
-        System.out.println("started");
+        System.out.println("[Bionic|Elevator] started");
         if (!elevator.atTop()) {
             elevator.moveElevator(ElevatorConstants.MAX_SPEED);
         } else {
             elevator.stop();
-            System.out.println("stopped");
+            System.out.println("[Bionic|Elevator] stopped");
         }
     }
 
