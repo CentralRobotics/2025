@@ -23,9 +23,7 @@ public class ElevatorSubsystem extends SubsystemBase {
 
     public ElevatorSubsystem() {
 
-        motorL.setInverted(ElevatorConstants.LMOTOR_INVERTED); 
-        motorR.setInverted(ElevatorConstants.RMOTOR_INVERTED); 
-
+       
         useThroughbore = ElevatorConstants.THROUGHBORE_CHANNEL_A != null
                       && ElevatorConstants.THROUGHBORE_CHANNEL_B != null;
 
@@ -45,49 +43,25 @@ public class ElevatorSubsystem extends SubsystemBase {
     }
 
     public void moveElevator(double speed) {
-        double position = getPosition();
-        double adjustedSpeed = applySoftLimits(speed, position);
-        motorL.set(adjustedSpeed);
-        motorR.set(adjustedSpeed);
+        motorL.set(speed);
+        motorR.set(-speed);
     }
 
     public void stop() {
+        double position = getPosition();
+        System.out.println(position);
         motorL.stopMotor();
         motorR.stopMotor();
     }
 
-    private double applySoftLimits(double speed, double position) {
-        double top, bottom, zone;
-
-        if (useThroughbore) {
-            top = ElevatorConstants.MAX_HEIGHT_TICKS;
-            bottom = ElevatorConstants.MIN_HEIGHT_TICKS;
-            zone = ElevatorConstants.SLOW_ZONE_TICKS;
-        } else {
-            top = ElevatorConstants.ROTATIONS_TO_TOP;
-            bottom = 0.0;
-            zone = ElevatorConstants.SLOW_ZONE_ROTATIONS;
-        }
-
-        double min = ElevatorConstants.MIN_SPEED;
-
-        if (speed > 0 && position >= top - zone) {
-            double ratio = (top - position) / zone;
-            return Math.max(min, speed * ratio);
-        } else if (speed < 0 && position <= bottom + zone) {
-            double ratio = (position - bottom) / zone;
-            return Math.min(-min, speed * ratio);
-        }
-        return speed;
-    }
-
+   
     public double getPosition() {
         if (useThroughbore && throughboreEncoder != null) {
             return throughboreEncoder.get();
         } else {
             // Average both motors and apply gear ratio correction
             double avgMotorRotations = (internalEncoderL.getPosition() + internalEncoderR.getPosition()) / 2.0;
-            return avgMotorRotations / ElevatorConstants.GEAR_RATIO; // converts to drum rotations
+            return internalEncoderL.getPosition(); // converts to drum rotations
         }
     }
 

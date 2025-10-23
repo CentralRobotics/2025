@@ -12,16 +12,16 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ClimberConstants;
 
 public class ArmSubsystem {
-     private final SparkMax twinRollerAMotor =
-        new SparkMax(ArmConstants.ARM_ROLLER_MOTORID_A, MotorType.kBrushless);
-    private final SparkMax twinRollerBMotor =
-        new SparkMax(ArmConstants.ARM_ROLLER_MOTORID_B, MotorType.kBrushless);
-    private final SparkMax armArticulationMotor = new SparkMax(ArmConstants.ARM_ARTICULATE_MOTORID, MotorType.kBrushless);
+    //  private final SparkMax twinRollerAMotor =
+    //     new SparkMax(ArmConstants.ARM_ROLLER_MOTORID_A, MotorType.kBrushless);
+    // private final SparkMax twinRollerBMotor =
+    //     new SparkMax(ArmConstants.ARM_ROLLER_MOTORID_B, MotorType.kBrushless);
+    // private final SparkMax armArticulationMotor = new SparkMax(ArmConstants.ARM_ARTICULATE_MOTORID, MotorType.kBrushless);
 
     public ArmSubsystem(){
-        twinRollerAMotor.setInverted(ArmConstants.ARM_AMOTOR_INVERTED);
-        twinRollerBMotor.setInverted(ArmConstants.ARM_BMOTOR_INVERTED);
-        armArticulationMotor.setInverted(ArmConstants.ARM_ARTICULATE_INVERTED);
+        // twinRollerAMotor.setInverted(ArmConstants.ARM_AMOTOR_INVERTED);
+        // twinRollerBMotor.setInverted(ArmConstants.ARM_BMOTOR_INVERTED);
+        // armArticulationMotor.setInverted(ArmConstants.ARM_ARTICULATE_INVERTED);
     }
 
 }

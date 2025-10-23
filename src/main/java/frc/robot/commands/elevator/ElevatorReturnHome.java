@@ -13,7 +13,7 @@ public class ElevatorReturnHome extends Command {
     }
 
     @Override
-    public void execute() {
+    public void initialize() {
         if (!elevator.atBottom()) {
             elevator.moveElevator(-ElevatorConstants.MAX_SPEED);
         } else {

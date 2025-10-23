@@ -92,8 +92,7 @@ public final class Constants {
     public static final double MIN_SPEED = 0.05; // crawl speed near limits
 
     // Internal relative encoder fallback
-    public static final double ROTATIONS_TO_TOP = 5.0; // calibrate experimentally
-    public static final double SLOW_ZONE_ROTATIONS = 5.0;
+    public static final double ROTATIONS_TO_TOP = 32; // calibrate experimentally
   }
 
   public static class ArmConstants {
