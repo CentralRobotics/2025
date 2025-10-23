@@ -23,7 +23,6 @@ public class ElevatorSubsystem extends SubsystemBase {
 
     public ElevatorSubsystem() {
 
-
         motorL.setInverted(ElevatorConstants.LMOTOR_INVERTED); 
         motorR.setInverted(ElevatorConstants.RMOTOR_INVERTED); 
 

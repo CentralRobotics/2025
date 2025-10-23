@@ -103,8 +103,5 @@ public final class Constants {
 
     public static final Integer THROUGHBORE_CHANNEL_A = null;
     public static final Integer THROUGHBORE_CHANNEL_B = null;
-
-
-
    }
 }
