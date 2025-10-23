@@ -100,8 +100,12 @@ public final class Constants {
     public static final int ARM_ARTICULATE_MOTORID = 17; 
     public static final int ARM_ROLLER_MOTORID_A = 18; 
     public static final int ARM_ROLLER_MOTORID_B = 19; 
+    public static final boolean ARM_ARTICULATE_INVERTED = false;
+    public static final boolean ARM_AMOTOR_INVERTED = false;
+    public static final boolean ARM_BMOTOR_INVERTED = true;
 
     public static final Integer THROUGHBORE_CHANNEL_A = null;
     public static final Integer THROUGHBORE_CHANNEL_B = null;
    }
+
 }
