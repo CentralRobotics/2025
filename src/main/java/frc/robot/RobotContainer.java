@@ -140,11 +140,6 @@ public class RobotContainer {
     Command elevatorReturnToHomePosition = new ElevatorReturnHome(elevatorbase);
 
 
-
-
-    // where to put this
-   //  new JoystickButton(xboxController, XboxController.Button.kA.value).onTrue(new ElevatorUp(elevatorbase));
-
     if (RobotBase.isSimulation()) {
       drivebase.setDefaultCommand(driveFieldOrientedDirectAngleKeyboard);
     } else {
@@ -197,12 +192,8 @@ public class RobotContainer {
 
 
       // ELEVATOR :0
-      // if(hauteJoystick.getRawButtonPressed(1)){
-      //   elevatorMoveToUpPosition;
-      // }
-      // if(hauteJoystick.getRawButtonPressed(2)){
-      //   elevatorReturnToHomePosition;
-      // }
+      new JoystickButton(hauteJoystick, 1).onTrue(elevatorMoveToUpPosition);
+      new JoystickButton(hauteJoystick, 2).onTrue(elevatorReturnToHomePosition);
       driverXbox.y().onTrue(elevatorMoveToUpPosition);
       driverXbox.b().onTrue(elevatorReturnToHomePosition);
 
