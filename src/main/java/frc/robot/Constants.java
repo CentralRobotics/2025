@@ -88,7 +88,7 @@ public final class Constants {
     public static final double SLOW_ZONE = 500; // ticks before top/bottom to start slowing
 
     // Motion config 
-    public static final double MAX_SPEED = 1.0; // 1.0 may be too fast with two
+    public static final double MAX_SPEED = 0.5; // 1.0 may be too fast with two
     public static final double MIN_SPEED = 0.05; // crawl speed near limits
 
     // Internal relative encoder fallback

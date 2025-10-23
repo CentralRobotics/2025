@@ -23,6 +23,10 @@ public class ElevatorSubsystem extends SubsystemBase {
 
     public ElevatorSubsystem() {
 
+
+        motorL.setInverted(ElevatorConstants.LMOTOR_INVERTED); 
+        motorR.setInverted(ElevatorConstants.RMOTOR_INVERTED); 
+
         useThroughbore = ElevatorConstants.THROUGHBORE_CHANNEL_A != null
                       && ElevatorConstants.THROUGHBORE_CHANNEL_B != null;
 
