@@ -95,4 +95,16 @@ public final class Constants {
     public static final double ROTATIONS_TO_TOP = 5.0; // calibrate experimentally
     public static final double SLOW_ZONE_ROTATIONS = 5.0;
   }
+
+  public static class ArmConstants {
+    public static final int ARM_ARTICULATE_MOTORID = 17; 
+    public static final int ARM_ROLLER_MOTORID_A = 18; 
+    public static final int ARM_ROLLER_MOTORID_B = 19; 
+
+    public static final Integer THROUGHBORE_CHANNEL_A = null;
+    public static final Integer THROUGHBORE_CHANNEL_B = null;
+
+
+
+   }
 }
