@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ClimberConstants;
 
-public class ArmSubsystem {
+public class ArmSubsystem extends SubsystemBase{
     //  private final SparkMax twinRollerAMotor =
     //     new SparkMax(ArmConstants.ARM_ROLLER_MOTORID_A, MotorType.kBrushless);
     // private final SparkMax twinRollerBMotor =
