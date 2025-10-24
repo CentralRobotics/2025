@@ -27,7 +27,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.arm.ArmACW;
 import frc.robot.commands.arm.ArmCW;
-import frc.robot.commands.claw.ClawClose;
+import frc.robot.commands.claw.ClawRelease;
 import frc.robot.commands.claw.ClawGrab;
 import frc.robot.commands.elevator.*;
 import frc.robot.subsystems.arm.ArmSubsystem;
@@ -148,8 +148,8 @@ public class RobotContainer {
     Command elevatorReturnToHomePosition = new ElevatorReturnHome(elevatorbase);
     Command armMoveinCockWiseMotion = new ArmCW(armbase);
     Command armMoveinACockWiseMotion = new ArmACW(armbase);
-    Command clawOpen = new ClawGrab(clawbase);
-    Command clawClose = new ClawClose(clawbase);
+    Command ClawGrab = new ClawGrab(clawbase);
+    Command clawClose = new ClawRelease(clawbase);
 
     if (RobotBase.isSimulation()) {
       drivebase.setDefaultCommand(driveFieldOrientedDirectAngleKeyboard);
@@ -207,8 +207,7 @@ public class RobotContainer {
       new JoystickButton(hauteJoystick, 2).onTrue(elevatorReturnToHomePosition);
       new JoystickButton(hauteJoystick, 3).onTrue(armMoveinACockWiseMotion);
       new JoystickButton(hauteJoystick, 4).onTrue(armMoveinCockWiseMotion);
-      new JoystickButton(hauteJoystick, 5).onTrue(clawOpen);
-      new JoystickButton(hauteJoystick, 6).onTrue(clawClose);
+      new JoystickButton(hauteJoystick, 5).whileTrue(ClawGrab);
       driverXbox.y().onTrue(elevatorMoveToUpPosition);
       driverXbox.b().onTrue(elevatorReturnToHomePosition);
 
