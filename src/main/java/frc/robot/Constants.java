@@ -110,6 +110,13 @@ public final class Constants {
   public static class ClawConstants{
     //todo constants 112-115
     public static final int CLAW_MOTOR_ID = 20;
+    public static final double kGRAB_SPEED = 0.8;
+    public static final double kRELEASE_SPEED = -0.6;
+    public static final double kHOLD_SPEED = 0.1;
+
+    // Stall detection
+    public static final double kStallCurrentThreshold = 35.0; // in amps not voltage -chloe
+    public static final double kStallTimeSeconds = 0.25; 
     
   }
 
