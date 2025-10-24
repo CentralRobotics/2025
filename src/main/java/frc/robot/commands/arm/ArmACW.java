@@ -7,6 +7,9 @@ import frc.robot.subsystems.arm.ArmSubsystem;
 public class ArmACW extends Command{
 
     private final ArmSubsystem arm;
+    private final double degreesToMove;
+    private double targetAngle;
+    private double initialAngle;
 
     public ArmACW(ArmSubsystem arm){
         this.arm = arm;
@@ -15,6 +18,13 @@ public class ArmACW extends Command{
     @Override
     public void initialize(){
         System.out.println("[Bionic|ArmACW] started");
+        initialAngle = arm.getEncoderPosition();
+        targetAngle = initialAngle + degreesToMove;
+    }
+
+
+    public void rotate(double degrees){
+
     }
 
 }

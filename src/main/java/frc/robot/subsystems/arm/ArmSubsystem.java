@@ -10,18 +10,33 @@ import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ClimberConstants;
+import com.revrobotics.RelativeEncoder;
 
 public class ArmSubsystem extends SubsystemBase{
-    //  private final SparkMax twinRollerAMotor =
-    //     new SparkMax(ArmConstants.ARM_ROLLER_MOTORID_A, MotorType.kBrushless);
-    // private final SparkMax twinRollerBMotor =
-    //     new SparkMax(ArmConstants.ARM_ROLLER_MOTORID_B, MotorType.kBrushless);
-    // private final SparkMax armArticulationMotor = new SparkMax(ArmConstants.ARM_ARTICULATE_MOTORID, MotorType.kBrushless);
+      private final SparkMax armMotor =
+         new SparkMax(ArmConstants.ARM_ROLLER_MOTORID_A, MotorType.kBrushless);
 
+        private final RelativeEncoder armEncoder;
+
+    //constructor below
     public ArmSubsystem(){
-        // twinRollerAMotor.setInverted(ArmConstants.ARM_AMOTOR_INVERTED);
-        // twinRollerBMotor.setInverted(ArmConstants.ARM_BMOTOR_INVERTED);
-        // armArticulationMotor.setInverted(ArmConstants.ARM_ARTICULATE_INVERTED);
+        armEncoder = armMotor.getEncoder();
+        resetEncoder();
     }
 
+    public void setMotorPower(double power){
+        armMotor.set(power);
+    }
+
+    public void stopMotor(){
+        armMotor.stopMotor();
+    }
+
+    public double getEncoderPosition(){
+        return armEncoder.getPosition() * 360.0;
+    }
+
+    public void resetEncoder(){
+        armEncoder.setPosition(0);
+    }
 }
