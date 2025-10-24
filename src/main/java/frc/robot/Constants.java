@@ -6,6 +6,7 @@ package frc.robot;
 
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.networktables.IntegerTopic;
 import swervelib.math.Matter;
 
 /**
@@ -107,7 +108,11 @@ public final class Constants {
     public static final Integer THROUGHBORE_CHANNEL_B = null;
    }
   public static class ClawConstants{
-    
+    //todo constants 112-115
+    public static final Integer CLAW_MOTORA_ID = null;
+    public static final Integer CLAW_MOTORB_ID = null;  
+    public static final boolean CLAW_MOTORA_INVERTED = true;
+    public static final boolean CLAW_MOTORB_INVERTED = false;
   }
 
 }

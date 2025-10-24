@@ -25,7 +25,13 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.commands.arm.ArmACW;
+import frc.robot.commands.arm.ArmCW;
+import frc.robot.commands.claw.ClawOpen;
+import frc.robot.commands.claw.ClawClose;
 import frc.robot.commands.elevator.*;
+import frc.robot.subsystems.arm.ArmSubsystem;
+import frc.robot.subsystems.claw.ClawSubsystem;
 import frc.robot.subsystems.elevator.ElevatorSubsystem;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import java.io.File;
@@ -48,6 +54,8 @@ public class RobotContainer {
   private final SwerveSubsystem drivebase = new SwerveSubsystem(
       new File(Filesystem.getDeployDirectory(), "swerve/neo"));
   private final ElevatorSubsystem elevatorbase = new ElevatorSubsystem();
+  private final ClawSubsystem clawbase = new ClawSubsystem();
+  private final ArmSubsystem armbase = new ArmSubsystem();
   private final SendableChooser<String> autoChooser = new SendableChooser<>();
   private static final String auto3PtReturn = "3PtReturn";
 
@@ -138,7 +146,10 @@ public class RobotContainer {
     Command driveSetpointGenKeyboard = drivebase.driveWithSetpointGeneratorFieldRelative(driveDirectAngleKeyboard);
     Command elevatorMoveToUpPosition = new ElevatorUp(elevatorbase);
     Command elevatorReturnToHomePosition = new ElevatorReturnHome(elevatorbase);
-
+    Command armMoveinCockWiseMotion = new ArmCW(armbase);
+    Command armMoveinACockWiseMotion = new ArmACW(armbase);
+    Command clawOpen = new ClawOpen(clawbase);
+    Command clawClose = new ClawClose(clawbase);
 
     if (RobotBase.isSimulation()) {
       drivebase.setDefaultCommand(driveFieldOrientedDirectAngleKeyboard);
@@ -194,6 +205,10 @@ public class RobotContainer {
       // ELEVATOR :0
       new JoystickButton(hauteJoystick, 1).onTrue(elevatorMoveToUpPosition);
       new JoystickButton(hauteJoystick, 2).onTrue(elevatorReturnToHomePosition);
+      new JoystickButton(hauteJoystick, 3).onTrue(armMoveinACockWiseMotion);
+      new JoystickButton(hauteJoystick, 4).onTrue(armMoveinCockWiseMotion);
+      new JoystickButton(hauteJoystick, 5).onTrue(clawOpen);
+      new JoystickButton(hauteJoystick, 6).onTrue(clawClose);
       driverXbox.y().onTrue(elevatorMoveToUpPosition);
       driverXbox.b().onTrue(elevatorReturnToHomePosition);
 
