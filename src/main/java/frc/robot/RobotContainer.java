@@ -27,8 +27,8 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.arm.ArmACW;
 import frc.robot.commands.arm.ArmCW;
-import frc.robot.commands.claw.ClawOpen;
 import frc.robot.commands.claw.ClawClose;
+import frc.robot.commands.claw.ClawGrab;
 import frc.robot.commands.elevator.*;
 import frc.robot.subsystems.arm.ArmSubsystem;
 import frc.robot.subsystems.claw.ClawSubsystem;
@@ -148,7 +148,7 @@ public class RobotContainer {
     Command elevatorReturnToHomePosition = new ElevatorReturnHome(elevatorbase);
     Command armMoveinCockWiseMotion = new ArmCW(armbase);
     Command armMoveinACockWiseMotion = new ArmACW(armbase);
-    Command clawOpen = new ClawOpen(clawbase);
+    Command clawOpen = new ClawGrab(clawbase);
     Command clawClose = new ClawClose(clawbase);
 
     if (RobotBase.isSimulation()) {

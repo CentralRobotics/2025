@@ -109,10 +109,8 @@ public final class Constants {
    }
   public static class ClawConstants{
     //todo constants 112-115
-    public static final Integer CLAW_MOTORA_ID = null;
-    public static final Integer CLAW_MOTORB_ID = null;  
-    public static final boolean CLAW_MOTORA_INVERTED = true;
-    public static final boolean CLAW_MOTORB_INVERTED = false;
+    public static final int CLAW_MOTOR_ID = 20;
+    
   }
 
 }
