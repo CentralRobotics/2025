@@ -148,8 +148,10 @@ public class RobotContainer {
     Command elevatorReturnToHomePosition = new ElevatorReturnHome(elevatorbase);
     Command armMoveinCockWiseMotion = new ArmCW(armbase);
     Command armMoveinACockWiseMotion = new ArmACW(armbase);
-    Command ClawGrab = new ClawGrab(clawbase);
+    Command clawGrab = new ClawGrab(clawbase);
     Command clawClose = new ClawRelease(clawbase);
+    Command armCW = new ArmCW(armbase);
+    Command armACW = new ArmACW(armbase);
 
     if (RobotBase.isSimulation()) {
       drivebase.setDefaultCommand(driveFieldOrientedDirectAngleKeyboard);
@@ -207,7 +209,7 @@ public class RobotContainer {
       new JoystickButton(hauteJoystick, 2).onTrue(elevatorReturnToHomePosition);
       new JoystickButton(hauteJoystick, 3).onTrue(armMoveinACockWiseMotion);
       new JoystickButton(hauteJoystick, 4).onTrue(armMoveinCockWiseMotion);
-      new JoystickButton(hauteJoystick, 5).whileTrue(ClawGrab);
+      //new JoystickButton(hauteJoystick, 5).whileTrue(ClawGrab);
       driverXbox.y().onTrue(elevatorMoveToUpPosition);
       driverXbox.b().onTrue(elevatorReturnToHomePosition);
 
