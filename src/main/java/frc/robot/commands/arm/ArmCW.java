@@ -18,5 +18,20 @@ public class ArmCW extends Command {
     public void initialize(){
         System.out.println("[Bionic|ArmCW] started");
     }
+
+    @Override
+    public execute(){
+        arm.setMotorPower(-0.4);
+    }
+
+    @Override
+    public void end(boolean interrupted){
+        arm.stopMotor();
+    }
+
+    @Override
+    public boolean isFinished(){
+        return false;
+    }
     
 }

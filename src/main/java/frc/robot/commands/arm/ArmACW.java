@@ -7,9 +7,6 @@ import frc.robot.subsystems.arm.ArmSubsystem;
 public class ArmACW extends Command{
 
     private final ArmSubsystem arm;
-    private final double degreesToMove = 45.0;
-    private double targetAngle;
-    private double initialAngle;
 
     public ArmACW(ArmSubsystem arm){
         this.arm = arm;
