@@ -40,4 +40,4 @@ we're working on better documentation for future broncos!
 
 ## Acknowledgement
 
-We owe a huge thank you to the [YAGSL](https://yetanothersoftwaresuite.com/) team for great providing FOSS example code and [community](https://discord.com/invite/yass) for the assistance in troubleshooting, and [Team 179 Children of The Swamp]() for allowing us to use their facilities! 
+We owe a huge thank you to the [YAGSL](https://yetanothersoftwaresuite.com/) team for providing great FOSS example code and [community](https://discord.com/invite/yass) for the assistance in troubleshooting, and [Team 179 Children of The Swamp]() for allowing us to use their facilities! 
