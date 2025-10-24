@@ -21,7 +21,6 @@ public class ArmSubsystem extends SubsystemBase{
     //constructor below
     public ArmSubsystem(){
         armEncoder = armMotor.getEncoder();
-        resetEncoder();
     }
 
     public void setMotorPower(double power){
@@ -31,12 +30,5 @@ public class ArmSubsystem extends SubsystemBase{
     public void stopMotor(){
         armMotor.stopMotor();
     }
-
-    public double getEncoderPosition(){
-        return armEncoder.getPosition() * 360.0;
-    }
-
-    public void resetEncoder(){
-        armEncoder.setPosition(0);
-    }
+    
 }

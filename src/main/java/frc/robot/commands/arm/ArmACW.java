@@ -19,15 +19,21 @@ public class ArmACW extends Command{
     @Override
     public void initialize(){
         System.out.println("[Bionic|ArmACW] started");
-        initialAngle = arm.getEncoderPosition();
-        targetAngle = initialAngle + degreesToMove;
     }
-
 
     @Override
     public void execute(){
-
+        arm.setMotorPower(0.4);
     }
 
+    @Override
+    public void end(boolean interrupted){
+        arm.stopMotor();
+    }
+
+    @Override
+    public boolean isFinished(){
+        return false;
+    }
 }
 
