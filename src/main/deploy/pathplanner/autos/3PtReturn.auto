@@ -45,12 +45,6 @@
           "data": {
             "pathName": "Step4"
           }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": null
-          }
         }
       ]
     }
