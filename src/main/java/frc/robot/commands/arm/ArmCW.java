@@ -20,7 +20,7 @@ public class ArmCW extends Command {
     }
 
     @Override
-    public execute(){
+    public void execute(){
         arm.setMotorPower(-0.4);
     }
 
