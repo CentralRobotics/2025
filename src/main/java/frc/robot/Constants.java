@@ -115,8 +115,8 @@ public final class Constants {
     public static final double kHOLD_SPEED = 0.1;
 
     // Stall detection
-    public static final double kStallCurrentThreshold = 35.0; // in amps not voltage -chloe
-    public static final double kStallTimeSeconds = 0.25; 
+    public static final double STALL_GATE_THRESHOLD= 35.0; // in amps not voltage -chloe
+    public static final double STALL_TIME_SECONDS = 0.25; 
     
   }
 

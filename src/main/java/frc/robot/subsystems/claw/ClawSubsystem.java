@@ -45,9 +45,9 @@ public class ClawSubsystem extends SubsystemBase {
     /** Detects if the claw motor is stalled (over threshold for time) */
     public boolean isStalled() {
         double current = getCurrentInAmps();
-        if (current > ClawConstants.kStallCurrentThreshold) {
+        if (current > ClawConstants.STALL_GATE_THRESHOLD) {
             if (!stallTimer.isRunning()) stallTimer.restart();
-            return stallTimer.hasElapsed(ClawConstants.kStallTimeSeconds);
+            return stallTimer.hasElapsed(ClawConstants.STALL_TIME_SECONDS);
         } else {
             stallTimer.stop();
             stallTimer.reset();
