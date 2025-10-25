@@ -7,7 +7,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Step1"
+            "pathName": "left to 1"
           }
         },
         {
@@ -19,7 +19,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Step2"
+            "pathName": "1 to intakeT"
           }
         },
         {
@@ -31,7 +31,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Step3"
+            "pathName": "IntakeT to 6 "
           }
         },
         {
@@ -43,7 +43,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Step4"
+            "pathName": "6 to intakeT"
           }
         }
       ]
