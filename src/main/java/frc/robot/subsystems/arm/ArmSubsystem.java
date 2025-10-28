@@ -14,7 +14,7 @@ import com.revrobotics.RelativeEncoder;
 
 public class ArmSubsystem extends SubsystemBase{
       private final SparkMax armMotor =
-         new SparkMax(ArmConstants.ARM_ROLLER_MOTORID_A, MotorType.kBrushless);
+         new SparkMax(ArmConstants.ARM_ARTICULATE_MOTORID, MotorType.kBrushless);
 
         private final RelativeEncoder armEncoder;
 

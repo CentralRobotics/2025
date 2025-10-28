@@ -375,7 +375,7 @@ public class SwerveSubsystem extends SubsystemBase
   {
     return run(() -> Arrays.asList(swerveDrive.getModules())
                            .forEach(it -> it.setAngle(0.0)));
-  }
+  };
 
   /**
    * Returns a Command that drives the swerve drive to a specific distance at a given speed.
