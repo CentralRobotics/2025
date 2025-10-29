@@ -14,6 +14,7 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.XboxController;
@@ -34,6 +35,8 @@ import frc.robot.subsystems.arm.ArmSubsystem;
 import frc.robot.subsystems.claw.ClawSubsystem;
 import frc.robot.subsystems.elevator.ElevatorSubsystem;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
+import frc.robot.util.RumblePatterns;
+
 import java.io.File;
 import swervelib.SwerveInputStream;
 
@@ -48,8 +51,8 @@ import swervelib.SwerveInputStream;
 public class RobotContainer {
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
-  final CommandXboxController driverXbox = new CommandXboxController(0);
-  final GenericHID hauteJoystick = new GenericHID(1);
+  public final CommandXboxController driverXbox = new CommandXboxController(0);
+  public final GenericHID hauteJoystick = new GenericHID(1);
   // The robot's subsystems and commands are defined here...
   private final SwerveSubsystem drivebase = new SwerveSubsystem(
       new File(Filesystem.getDeployDirectory(), "swerve/neo"));
@@ -57,7 +60,7 @@ public class RobotContainer {
   private final ClawSubsystem clawbase = new ClawSubsystem();
   private final ArmSubsystem armbase = new ArmSubsystem();
   private final SendableChooser<String> autoChooser = new SendableChooser<>();
-  private static final String auto3PtReturn = "3PtReturn";
+  private static final String defaultAuto = "testAuto";
 
   /**
    * Converts driver input into a field-relative ChassisSpeeds that is controlled
@@ -115,8 +118,8 @@ public class RobotContainer {
     DriverStation.silenceJoystickConnectionWarning(true);
     NamedCommands.registerCommand("test", Commands.print("I EXIST"));
     NamedCommands.registerCommand("ElevatorUp", new ElevatorUp(elevatorbase));
-    autoChooser.addOption(auto3PtReturn, auto3PtReturn);
-    autoChooser.setDefaultOption(auto3PtReturn, auto3PtReturn);
+    autoChooser.addOption(defaultAuto, defaultAuto);
+    autoChooser.setDefaultOption(defaultAuto, defaultAuto);
     SmartDashboard.putData("auto", autoChooser);
 
   }
@@ -196,8 +199,7 @@ public class RobotContainer {
       driverXbox.rightBumper().whileTrue(drivebase.centerModulesCommand());
     } else {
 
-      // EVERY OTHER MODE
-      driverXbox.a().onTrue((Commands.runOnce(drivebase::zeroGyro)));
+      // EVERY OTHER MOD
       driverXbox.x().onTrue(Commands.runOnce(drivebase::addFakeVisionReading));
       driverXbox.start().whileTrue(Commands.none());
       driverXbox.back().whileTrue(Commands.none());
@@ -211,17 +213,33 @@ public class RobotContainer {
       new JoystickButton(hauteJoystick, 4).onTrue(armMoveinCockWiseMotion);
       //new JoystickButton(hauteJoystick, 5).whileTrue(ClawGrab);
       driverXbox.y().onTrue(elevatorMoveToUpPosition);
-      driverXbox.b().onTrue(elevatorReturnToHomePosition);
+      driverXbox.a().onTrue(
+        Commands.sequence(
+            Commands.runOnce(drivebase::zeroGyro),
+            RumblePatterns.success(driverXbox) 
+        )
+    );
+    driverXbox.y().onTrue(
+    elevatorMoveToUpPosition
+        .andThen(RumblePatterns.success(driverXbox))
+);
 
+driverXbox.b().onTrue(
+    elevatorReturnToHomePosition
+        .andThen(RumblePatterns.doublePulse(driverXbox)));
+    
+    
 
 
       /*
        * 
        */
 
-      // Hold RB to command all module angles to 0° (desired = 0, speed = 0)
-      driverXbox.rightBumper().whileTrue(drivebase.centerModulesCommand());
-    }
+      
+driverXbox.rightBumper().whileTrue(
+    drivebase.centerModulesCommand()
+        .andThen(RumblePatterns.doublePulse(driverXbox))
+);    }
   }
 
   /**
@@ -230,8 +248,7 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    // An example command will be run in autonomous
-    return drivebase.getAutonomousCommand(autoChooser.getSelected());
+        return drivebase.getAutonomousCommand(autoChooser.getSelected());
   }
 
   public void setMotorBrake(boolean brake) {
