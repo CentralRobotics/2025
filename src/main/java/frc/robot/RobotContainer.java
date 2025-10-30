@@ -35,7 +35,7 @@ import frc.robot.subsystems.arm.ArmSubsystem;
 import frc.robot.subsystems.claw.ClawSubsystem;
 import frc.robot.subsystems.elevator.ElevatorSubsystem;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
-import frc.robot.util.RumblePatterns;
+import frc.robot.util.FeedbackEngine.FeedbackEngine;
 
 import java.io.File;
 import swervelib.SwerveInputStream;
@@ -216,17 +216,17 @@ public class RobotContainer {
       driverXbox.a().onTrue(
         Commands.sequence(
             Commands.runOnce(drivebase::zeroGyro),
-            RumblePatterns.success(driverXbox) 
+            FeedbackEngine.success(driverXbox) 
         )
     );
     driverXbox.y().onTrue(
     elevatorMoveToUpPosition
-        .andThen(RumblePatterns.success(driverXbox))
+        .andThen(FeedbackEngine.success(driverXbox))
 );
 
 driverXbox.b().onTrue(
     elevatorReturnToHomePosition
-        .andThen(RumblePatterns.doublePulse(driverXbox)));
+        .andThen(FeedbackEngine.doublePulse(driverXbox)));
     
     
 
@@ -238,7 +238,7 @@ driverXbox.b().onTrue(
       
 driverXbox.rightBumper().whileTrue(
     drivebase.centerModulesCommand()
-        .andThen(RumblePatterns.doublePulse(driverXbox))
+        .andThen(FeedbackEngine.doublePulse(driverXbox))
 );    }
   }
 
